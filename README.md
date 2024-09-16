@@ -27,7 +27,7 @@ Use following commands to get the project up and running. Working with an enviro
 10) *python manage.py makemigrations* to package up your model changes into individual migration files. Run this every time you make changes to data base structure or format or if needed.
 11) *python manage.py migrate* to create tables, modify columns, add indexes, and performs any other database-related operations needed to reflect the changes you've made. Run this every time you make changes to data base structure or format or if needed.
 12) *python manage.py runserver* to run the development server.
-13) visit *<https://localhost:8000>* as the home page
+13) visit *<http://localhost:8000>* as the home page
 
 In case of any error regarding package importing from VS Code refer to [How to resolve 'Import "{some_package}.contrib" could not be resolved from source' in VS Code?](https://stackoverflow.com/questions/67586182/how-to-resolve-import-django-contrib-could-not-be-resolved-from-source-in-vs) and update python interpreter path.
 
