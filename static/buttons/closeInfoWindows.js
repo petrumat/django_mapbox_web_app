@@ -1,16 +1,15 @@
 function createCloseInfoWindowsButton() {
-    // Create a button for recenter the map to Bucharest
+    // Create a button for closing info windows (popups)
     var button = document.createElement('button');
     button.textContent = 'Close Markers';
-    button.classList.add('map-button'); // CSS
+    button.classList.add('map-button');
 
-    // Add click event listener for the recenter button
+    // Add click event listener for the close button
     button.addEventListener('click', function() {
         infoWindows.forEach(infoWindow => {
-            infoWindow.close();
+            infoWindow.remove();
         });
     });
 
-    // Return the created button element
     return button;
 }

@@ -1,15 +1,14 @@
 function createRecenterButton() {
-    // Create a button for recenter the map to Bucharest
+    // Create a button to center the map to Bucharest
     var button = document.createElement('button');
     button.textContent = 'Recenter Map';
-    button.classList.add('map-button'); // CSS
+    button.classList.add('map-button');
 
     // Add click event listener for the recenter button
     button.addEventListener('click', function() {
-        map.setCenter(centerBucharest);
+        map.setCenter([centerBucharest.lng, centerBucharest.lat]);
         map.setZoom(12);
     });
 
-    // Return the created button element
     return button;
 }
