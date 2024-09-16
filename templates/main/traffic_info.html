@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block extend_head %}
+    <title>Traffic Info</title>
+{% endblock %}
+
+
+{% block content %}
+    <!-- Header of the page -->
+    <h3 id="map">Traffic Info</h3>
+
+    <!-- The map -->
+    <div id="traffic_info"></div>
+
+    <input id="search-input" type="text" placeholder="Search for a location...">
+{% endblock %}
+
+
+{% block extend_footer %}
+    <script type="text/javascript">
+        var google_api_key = "{{ google_api_key | safe }}";
+        var base_country = "{{base_country|safe}}";
+    </script>
+
+    <script src="{% static 'traffic_info.js' %}"></script>
+
+    <script src="{% static 'buttons/closeInfoWindows.js' %}"></script>
+    <script src="{% static 'buttons/recenter.js' %}"></script>
+    <script src="{% static 'buttons/toggleTrafficLayer.js' %}"></script>
+
+    <script src="{% static 'map/labels.js' %}"></script>
+    <script src="{% static 'map/markers.js' %}"></script>
+
+    <img id="hiddenTrafficInfoGreenIcon" src="{% static '/map/markers/trafficInfoGreen.png' %}">
+    <img id="hiddenTrafficInfoYellowIcon" src="{% static '/map/markers/trafficInfoYellow.png' %}">
+    <img id="hiddenTrafficInfoRedIcon" src="{% static '/map/markers/trafficInfoRed.png' %}">
+{% endblock %}

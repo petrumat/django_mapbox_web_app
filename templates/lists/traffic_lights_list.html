@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block extend_head %}
+    <title>Traffic Lights List</title>
+{% endblock %}
+
+
+{% block content %}
+
+    <div class='container'>
+        <h1>Traffic Lights List</h1>
+        {% for light in traffic_lights_list %}
+            <div class="card">
+                <div class="card-header"> {{ light }} </div>    
+                <div class="card-body">
+                    <p class="card-text">
+                        <strong>id:</strong> {{ light.id }}</br>
+                        <strong>timestamp:</strong> {{ light.timestamp }}</br>
+                        <strong>updated:</strong> {{ light.updated }}</br>
+                        <strong>lat:</strong>{{ light.lat }} long:{{ light.lng }}</br>
+                        <strong>orientation:</strong> {{ light.orientation }}</br>
+                        <strong>functioning:</strong> {{ light.functioning }}</br>
+                        <strong>function_error:</strong> {{ light.function_error }}</br>
+                        <strong>program:</strong> {{ light.program }}</br>
+                        <strong>time:</strong> 
+                            <ul>
+                                <li> <strong>Red:</strong> {{ light.time_red }}</li>
+                                <li> <strong>Yellow:</strong> {{ light.time_yellow }}</li>
+                                <li> <strong>Green:</strong> {{ light.time_green }}</li>
+                            </ul>
+                        <strong>error:</strong> {{ light.error }}</br>
+                        <strong>ariaLabel:</strong> {{ light.ariaLabel }}</br>
+                    </p>
+                </div>
+            </div>
+            </br>
+        {% endfor %} 
+    </div>
+
+{% endblock %}
+
+
+{% block extend_footer %}
+
+{% endblock %}

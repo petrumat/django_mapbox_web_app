@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block extend_head %}
+    <title>Feedback</title>
+{% endblock %}
+
+
+{% block content %}
+    <h3>Django Google API - Submit Feedback</h3>
+
+    <div class="feedback-container">
+        <h2>Submit Your Feedback</h2>
+
+        <form id="feedbackform" method="POST" action="/feedback" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <label for="title">Title</label>
+            {{ form.title }}
+
+            <label for="description">Description</label>
+            {{ form.description }}
+
+            <label for="photo">Photo</label>
+            {{ form.photo }}
+
+            <button type="submit">Submit Feedback</button>
+        </form>
+
+    </div>
+{% endblock %}
+
+
+{% block extend_footer %}
+    <script type="text/javascript">
+        var recaptcha_site_key = '{{recaptcha_site_key|safe}}'
+    </script>
+{% endblock %}

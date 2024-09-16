@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block extend_head %}
+    <title>Generate Reports List</title>
+{% endblock %}
+
+
+{% block content %}
+
+    <div class='container'>
+        <h1>Generate Reports List</h1>
+        {% for report in generate_reports_list %}
+            <div class="card">
+                <div class="card-header"> {{ report.title }} </div>    
+                <div class="card-body">
+                    <p class="card-text">
+                        <strong>id:</strong> {{ report.id }}</br>
+                        <strong>timestamp:</strong> {{ report.timestamp }}</br>
+                        <strong>updated:</strong> {{ report.updated }}</br>
+                        <strong>lat:</strong>{{ report.lat }} long:{{ report.lng }}</br>
+                        <strong>zone:</strong> {{ report.zone }}</br>
+                        <strong>link:</strong> {{ report.link }}</br>
+                        <strong>content:</strong> {{ report.content }}</br>
+                        <strong>ariaLabel:</strong> {{ report.ariaLabel }}</br>
+                    </p>
+                </div>
+            </div>
+            </br>
+        {% endfor %} 
+    </div>
+
+{% endblock %}
+
+
+{% block extend_footer %}
+
+{% endblock %}

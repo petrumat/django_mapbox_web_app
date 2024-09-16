@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block extend_head %}
+    <title>Traffic Info List</title>
+{% endblock %}
+
+
+{% block content %}
+
+    <div class='container'>
+        <h1>Traffic Info List</h1>
+        {% for traffic_info in traffic_info_list %}
+            <div class="card">
+                <div class="card-header"> {{ traffic_info }} </div>    
+                <div class="card-body">
+                    <p class="card-text">
+                        <strong>id:</strong> {{ traffic_info.id }}</br>
+                        <strong>timestamp:</strong> {{ traffic_info.timestamp }}</br>
+                        <strong>updated:</strong> {{ traffic_info.updated }}</br>
+                        <strong>lat:</strong>{{ traffic_info.lat }} long:{{ traffic_info.lng }}</br>
+                        <strong>zone:</strong> {{ traffic_info.zone }}</br>
+                        <strong>density:</strong> {{ traffic_info.density }}</br>
+                        <strong>med_speed:</strong> {{ traffic_info.med_speed }}</br>
+                        <strong>lights:</strong> {{ traffic_info.lights }}</br>
+                        <strong>cameras:</strong> {{ traffic_info.cameras }}</br>
+                        <strong>signs:</strong> {{ traffic_info.signs }}</br>
+                        <strong>incidents:</strong> {{ traffic_info.incidents }}</br>
+                        <strong>accidents:</strong> {{ traffic_info.accidents }}</br>
+                        <strong>alerts:</strong> {{ traffic_info.alerts }}</br>
+                        <strong>alert_content:</strong> {{ traffic_info.alert_content }}</br>
+                        <strong>ariaLabel:</strong> {{ traffic_info.ariaLabel }}</br>
+                        <strong>icon:</strong> {{ traffic_info.icon }}</br>
+                    </p>
+                </div>
+            </div>
+            </br>
+        {% endfor %} 
+    </div>
+
+{% endblock %}
+
+
+{% block extend_footer %}
+
+{% endblock %}

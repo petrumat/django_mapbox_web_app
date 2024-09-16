@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block extend_head %}
+    <title>Generate Alerts List</title>
+{% endblock %}
+
+
+{% block content %}
+
+    <div class='container'>
+        <h1>Generate Alerts List</h1>
+        {% for alert in generate_alerts_list %}
+            <div class="card">
+                <div class="card-header"> {{ alert.title }} </div>    
+                <div class="card-body">
+                    <p class="card-text">
+                        <strong>id:</strong> {{ alert.id }}</br>
+                        <strong>timestamp:</strong> {{ alert.timestamp }}</br>
+                        <strong>updated:</strong> {{ alert.updated }}</br>
+                        <strong>lat:</strong>{{ alert.lat }} long:{{ alert.lng }}</br>
+                        <strong>zone:</strong> {{ alert.zone }}</br>
+                        <strong>speed:</strong> {{ alert.speed }}</br>
+                        <strong>alert:</strong> {{ alert.alert }}</br>
+                        <strong>content:</strong> {{ alert.content }}</br>
+                        <strong>ariaLabel:</strong> {{ alert.ariaLabel }}</br>
+                    </p>
+                </div>
+            </div>
+            </br>
+        {% endfor %} 
+    </div>
+
+{% endblock %}
+
+
+{% block extend_footer %}
+
+{% endblock %}

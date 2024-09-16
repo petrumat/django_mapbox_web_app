@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block extend_head %}
+    <title>Generate Reports</title>
+{% endblock %}
+
+
+{% block content %}
+    <!-- Header of the page -->
+    <h3 id="map">Generate Reports</h3>
+
+    <!-- The map -->
+    <div id="generate_reports"></div>
+
+    <input id="search-input" type="text" placeholder="Search for a location...">
+{% endblock %}
+
+
+{% block extend_footer %}
+    <script type="text/javascript">
+        var google_api_key = "{{ google_api_key | safe }}";
+        var base_country = "{{base_country|safe}}";
+    </script>
+
+    <script src="{% static 'generate_reports.js' %}"></script>
+
+    <script src="{% static 'buttons/closeInfoWindows.js' %}"></script>
+    <script src="{% static 'buttons/recenter.js' %}"></script>
+    <script src="{% static 'buttons/toggleTrafficLayer.js' %}"></script>
+
+    <script src="{% static 'map/labels.js' %}"></script>
+    <script src="{% static 'map/markers.js' %}"></script>
+
+    <img id="hiddenGenerateReportIcon" src="{% static '/map/markers/generateReport.png' %}">
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block extend_head %}
+    <title>Traffic Lights</title>
+{% endblock %}
+
+
+{% block content %}
+    <!-- Header of the page -->
+    <h3 id="map">Traffic Lights</h3>
+
+    <!-- The map -->
+    <div id="traffic_lights"></div>
+
+    <input id="search-input" type="text" placeholder="Search for a location...">
+{% endblock %}
+
+
+{% block extend_footer %}
+    <script type="text/javascript">
+        var google_api_key = "{{ google_api_key | safe }}";
+        var base_country = "{{base_country|safe}}";
+    </script>
+
+    <script src="{% static 'traffic_lights.js' %}"></script>
+
+    <script src="{% static 'buttons/closeInfoWindows.js' %}"></script>
+    <script src="{% static 'buttons/recenter.js' %}"></script>
+    <script src="{% static 'buttons/toggleTrafficLayer.js' %}"></script>
+
+    <script src="{% static 'map/labels.js' %}"></script>
+    <script src="{% static 'map/markers.js' %}"></script>
+
+    <img id="hiddenTrafficLightIcon" src="{% static '/map/markers/trafficLight.png' %}">
+    <img id="hiddenTrafficLightGreenIcon" src="{% static '/map/markers/trafficLightGreen.png' %}">
+    <img id="hiddenTrafficLightRedIcon" src="{% static '/map/markers/trafficLightRed.png' %}">
+{% endblock %}

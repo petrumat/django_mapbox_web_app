@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block extend_head %}
+    <title>Feedback List</title>
+{% endblock %}
+
+
+{% block content %}
+    <div class='container'>
+        <h1>Received Feedback List</h1>
+        {% for feedback in feedback_list %}
+            <div class="card">
+                <div class="card-header"> {{ feedback.title }} </div>    
+                <div class="card-body">
+                    <p class="card-text">
+                        <strong>id:</strong> {{ feedback.id }}</br>
+                        <strong>timestamp:</strong> {{ feedback.timestamp }}</br>
+                        <strong>updated:</strong> {{ feedback.updated }}</br>
+                        <strong>user:</strong> {{ feedback.user }}</br>
+                        <strong>description:</strong> {{ feedback.description }}</br>
+                        <strong>photo:</strong> {{ feedback.photo }}</br>
+                    </p>
+                </div>
+            </div>
+            </br>
+        {% endfor %} 
+    </div>
+
+{% endblock %}
+
+
+{% block extend_footer %}
+
+{% endblock %}
