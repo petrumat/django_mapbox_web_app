@@ -2,7 +2,7 @@ from colorama import init, Fore
 import os, sys, django
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tutorial.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'main_app.settings')
 django.setup()
 
 from users.models import TrafficInfo, TrafficLight, GenerateAlert, GenerateReport
