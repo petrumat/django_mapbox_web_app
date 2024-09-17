@@ -1,4 +1,4 @@
-mapboxgl.accessToken = mapboxAccessToken;
+mapboxgl.accessToken = mapboxPublicToken;
 window.addEventListener("load", initMap);
 
 const centerBucharest = { lat: 44.4268, lng: 26.10246 };
@@ -15,21 +15,21 @@ let circles = [];
 
 function initMap() {
   map = new mapboxgl.Map({
-    container: 'generate_alerts', // Same as the id of your map element
+    container: 'generate_alerts',
     style: 'mapbox://styles/mapbox/streets-v11',
     center: centerBucharest,
     zoom: 12
   });
 
-  createLabel('Generate Alerts Map');
+  // createLabel('Generate Alerts Map');
   createSearchBox();
-  map.addControl(new mapboxgl.NavigationControl());
+  map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
+  map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
   createButtons();
 
-  createIcon();
+  icon = createIcon('hiddenGenerateAlertIcon');
   displayMarkers();
   
-  // Right-click event in Mapbox
   map.on('contextmenu', function(event) {
     const lng = event.lngLat.lng;
     const lat = event.lngLat.lat;
@@ -42,6 +42,18 @@ function initMap() {
             console.error('Failed to get address for the coordinates.');
         }
     });
+  });
+
+  map.on('styledata', function() {
+    const currentStyle = map.getStyle().name;
+  
+    if (currentStyle.toLowerCase().includes('night')) {
+      const mapContainer = map.getContainer();
+      mapContainer.classList.add('night-mode');
+    } else {
+      const mapContainer = map.getContainer();
+      mapContainer.classList.remove('night-mode');
+    }
   });
 
   // setInterval(displayMarkers, milliseconds);
@@ -57,16 +69,6 @@ async function fetchMarkerData() {
   }
 }
 
-function createIcon() {
-  const iconElement = document.getElementById('hiddenGenerateAlertIcon');
-  const img = document.createElement('img');
-  img.src = iconElement.src;
-  img.className = 'custom-marker-icon';
-  img.style.width = '40px';
-  img.style.height = '40px';
-  icon = img
-}
-
 async function displayMarkers() {
   const markers = await fetchMarkerData();
 
@@ -78,11 +80,9 @@ async function displayMarkers() {
       existingMarker.data = markerData;
       updateCircle(existingMarker.id, markerData);
     } else {
-      const markerElement = document.createElement('div');
-      markerElement.className = 'custom-marker';
       
       const marker = new mapboxgl.Marker({
-        element: markerElement,
+        element: icon,
       })
       .setLngLat([markerData.lng, markerData.lat])
       .addTo(map);
@@ -176,7 +176,7 @@ function createButtons() {
 
 function createLabel(textContent) {
   const customLabelDiv = document.createElement('div');
-  customLabelDiv.className = 'map-label';  // Add custom styling to your label
+  customLabelDiv.className = 'map-label';
 
   const label = document.createElement('span');
   label.innerText = textContent;
@@ -190,16 +190,18 @@ function createLabel(textContent) {
       customLabelDiv.parentNode.removeChild(customLabelDiv);
     }
   }, 'top-left');
+
 }
 
 function createSearchBox() {
   const geocoder = new MapboxGeocoder({
     accessToken: mapboxgl.accessToken,
     mapboxgl: mapboxgl,
-    countries: base_country.toLowerCase(),  // Restrict to a specific country
+    countries: base_country.toLowerCase(),
+    placeholder: 'Search for places',
   });
 
-  document.getElementById('search-input').appendChild(geocoder.onAdd(map));
+  map.addControl(geocoder, 'top-left');
 
   geocoder.on('result', (event) => {
     const [lng, lat] = event.result.geometry.coordinates;

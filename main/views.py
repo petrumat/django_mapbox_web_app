@@ -8,6 +8,7 @@ Basic view for routing
 def route(request):
 
 	context = {
+	"mapbox_public_token": settings.MAPBOX_PUBLIC_TOKEN,
 	"mapbox_access_token": settings.MAPBOX_ACCESS_TOKEN,
 	"base_country": settings.BASE_COUNTRY}
 	return render(request, 'main/route.html', context)
@@ -49,6 +50,7 @@ def map(request):
 		return redirect(reverse('main:route'))
 
 	context = {
+		"mapbox_public_token": settings.MAPBOX_PUBLIC_TOKEN,
 		"mapbox_access_token": settings.MAPBOX_ACCESS_TOKEN,
 		"base_country": settings.BASE_COUNTRY,
 		"lat_a": lat_a,
@@ -73,6 +75,7 @@ Traffic info view
 def traffic_info(request):
 
 	context = {
+		"mapbox_public_token": settings.MAPBOX_PUBLIC_TOKEN,
 		"mapbox_access_token": settings.MAPBOX_ACCESS_TOKEN,
 		"base_country": settings.BASE_COUNTRY,
 	}
@@ -86,6 +89,7 @@ Generate alerts view
 def generate_alerts(request):
 
 	context = {
+		"mapbox_public_token": settings.MAPBOX_PUBLIC_TOKEN,
 		"mapbox_access_token": settings.MAPBOX_ACCESS_TOKEN,
 		"base_country": settings.BASE_COUNTRY,
 	}
@@ -99,6 +103,7 @@ Traffic lights view
 def traffic_lights(request):
 
 	context = {
+		"mapbox_public_token": settings.MAPBOX_PUBLIC_TOKEN,
 		"mapbox_access_token": settings.MAPBOX_ACCESS_TOKEN,
 		"base_country": settings.BASE_COUNTRY,
 	}
@@ -111,6 +116,7 @@ Generate reports view
 def generate_reports(request):
 
 	context = {
+		"mapbox_public_token": settings.MAPBOX_PUBLIC_TOKEN,
 		"mapbox_access_token": settings.MAPBOX_ACCESS_TOKEN,
 		"base_country": settings.BASE_COUNTRY,
 	}

@@ -1,12 +1,15 @@
 function createIcon(elementId) {
-    var icon = {
-        url: document.getElementById(elementId).src,
-        scaledSize: new google.maps.Size(50, 50),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(25, 50)
-    };
+    const imgSrc = document.getElementById(elementId).src;
 
-    return icon;
+    const img = document.createElement('img');
+    img.src = imgSrc;
+    img.style.width = '50px';
+    img.style.height = '50px';
+    
+    img.style.position = 'relative';
+    img.style.transform = 'translate(-50%, -100%)';
+
+    return img;
 }
 
 
