@@ -38,7 +38,10 @@ def add_traffic_info_marker():
 
     marker = TrafficInfo(lat=lat, lng=lng, zone=zone, density=density, med_speed=med_speed, lights=lights, cameras=cameras, signs=signs, incidents=incidents, accidents=accidents, alerts=alerts, alert_content=alert_content, ariaLabel=ariaLabel, icon=icon, title=title)
 
-    marker.save()
+    try:
+        marker.save()
+    except:
+        sys.exit(f"Couldn't add traffic marker {marker.pk}")
 
     print(Fore.GREEN + f"Added traffic marker {marker.pk}")
 
@@ -60,7 +63,10 @@ def add_traffic_light_marker():
 
     marker = TrafficLight(lat=lat, lng=lng, zone=zone, orientation=orientation, functioning=functioning, function_error=function_error, program=program, time_red=time_red, time_yellow=time_yellow, time_green=time_green, error=error, ariaLabel=ariaLabel, title=title)
 
-    marker.save()
+    try:
+        marker.save()
+    except:
+        sys.exit(f"Couldn't add light marker {marker.pk}")
 
     print(Fore.GREEN + f"Added light marker {marker.pk}")
 
@@ -77,7 +83,10 @@ def add_generate_alert_marker():
 
     marker = GenerateAlert(lat=lat, lng=lng, zone=zone, speed=speed, alert=alert, content=content, ariaLabel=ariaLabel, title=title)
 
-    marker.save()
+    try:
+        marker.save()
+    except:
+        sys.exit(f"Couldn't add alert marker {marker.pk}")
 
     print(Fore.GREEN + f"Added alert marker {marker.pk}")
 
@@ -95,7 +104,10 @@ def add_generate_report_marker():
 
     marker = GenerateReport(lat=lat, lng=lng, zone=zone, link=link, content=content, ariaLabel=ariaLabel, title=title)
 
-    marker.save()
+    try:
+        marker.save()
+    except:
+        sys.exit(f"Couldn't add report marker {marker.pk}")
 
     print(Fore.GREEN + f"Added report marker {marker.pk}")
 
