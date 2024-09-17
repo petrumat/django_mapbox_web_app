@@ -1,12 +1,10 @@
-$.getScript("https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js")
-.done(function(script, textStatus) {
-    mapboxgl.accessToken = mapbox_access_token;
-    window.addEventListener("load", initMap);
-});
+mapboxgl.accessToken = mapboxAccessToken;
+window.addEventListener("load", initMap);
 
 const centerBucharest = { lat: 44.4268, lng: 26.10246 };
 const milliseconds = 1000;
 const circleRadius = 1500;
+
 let map;
 let searchBox;
 let icon;
@@ -25,8 +23,10 @@ function initMap() {
 
   createLabel('Generate Alerts Map');
   createSearchBox();
-  icon = createIcon('hiddenGenerateAlertIcon');
+  map.addControl(new mapboxgl.NavigationControl());
   createButtons();
+
+  createIcon();
   displayMarkers();
   
   // Right-click event in Mapbox
@@ -44,7 +44,7 @@ function initMap() {
     });
   });
 
-  setInterval(displayMarkers, milliseconds);
+  // setInterval(displayMarkers, milliseconds);
 }
 
 async function fetchMarkerData() {
@@ -55,6 +55,16 @@ async function fetchMarkerData() {
     console.error('Error fetching marker generateAlertsData:', error);
     return [];
   }
+}
+
+function createIcon() {
+  const iconElement = document.getElementById('hiddenGenerateAlertIcon');
+  const img = document.createElement('img');
+  img.src = iconElement.src;
+  img.className = 'custom-marker-icon';
+  img.style.width = '40px';
+  img.style.height = '40px';
+  icon = img
 }
 
 async function displayMarkers() {
@@ -254,3 +264,4 @@ async function saveMarkerToBackend(lat, lng, label) {
     console.error('Error saving marker:', error);
   }
 }
+
