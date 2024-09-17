@@ -1,6 +1,6 @@
 $.getScript("https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js")
 .done(function(script, textStatus) {
-    mapboxgl.accessToken = 'YOUR_MAPBOX_ACCESS_TOKEN';
+    mapboxgl.accessToken = mapbox_access_token;
     window.addEventListener("load", initMap);
 });
 
