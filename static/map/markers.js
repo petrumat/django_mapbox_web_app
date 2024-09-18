@@ -12,7 +12,88 @@ function createIcon(elementId) {
     return img;
 }
 
+function addMarkerEvent(map, mapboxgl, icon, infoWindow, mapMarkers, link) {
+    map.on('contextmenu', function(event) {
+        const lng = event.lngLat.lng;
+        const lat = event.lngLat.lat;
+    
+        // Geocode the coordinates to get the address
+        geocodeLatLng(lat, lng, (address) => {
+            if (address) {
+                addMarker(lat, lng, address, map, mapboxgl, icon, infoWindow, mapMarkers, link);
+            } else {
+                console.error('Failed to get address for the coordinates.');
+            }
+        }, mapboxgl);
+    });
+}
 
+function geocodeLatLng(lat, lng, callback, mapboxgl) {
+    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${mapboxgl.accessToken}`;
+  
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+            if (data.features.length > 0) {
+                callback(data.features[0].place_name);
+            } else {
+                callback(null);
+            }
+      })
+      .catch(err => {
+            console.error('Error fetching address:', err);
+            callback(null);
+      });
+}
+
+function addMarker(lat, lng, label, map, mapboxgl, icon, infoWindow, mapMarkers, link) {
+    const marker = new mapboxgl.Marker({
+        element: icon,
+    })
+    .setLngLat([lng, lat])
+    .addTo(map);
+  
+    const infoWindow = mapboxgl.Popup({ offset: 25 })
+        .setText("New Marker")
+        .setLngLat([lng, lat])
+        .addTo(map);
+    
+      marker.getElement().addEventListener('click', () => {
+            infoWindow.addTo(map);
+      });  
+  
+    // NEEDS WORK!
+        // const infoWindow = new google.maps.InfoWindow({
+        //     content: "New Marker"
+        // });
+        // marker.addListener("click", () => {
+        //     infoWindow.open({ anchor: marker, map });
+        // });
+    // NEEDS WORK!
+    
+    mapMarkers.push(marker);
+    saveMarkerToBackend(lat, lng, label, link);
+}
+
+async function saveMarkerToBackend(lat, lng, label, link) {
+    try {
+      const response = await fetch(link, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ lat, lng, label })
+      });
+  
+      if (response.ok) {
+            console.log('Marker saved successfully');
+      } else {
+            console.error('Error saving marker:', response.statusText);
+      }
+    } catch (error) {
+        console.error('Error saving marker:', error);
+    }
+}
 
 // General functions for building content strings
 function appendGeolocation(lat, lng) {

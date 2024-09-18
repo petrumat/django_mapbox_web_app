@@ -1,54 +1,34 @@
-$.getScript( "https://maps.googleapis.com/maps/api/js?key=" + google_api_key + "&libraries=places") 
-.done(function( script, textStatus ) {
-    window.addEventListener("load", initMap);
-});
+mapboxgl.accessToken = mapboxPublicToken;
+window.addEventListener("load", initMap);
 
 const centerBucharest = { lat: 44.4268, lng: 26.10246 }
 const milliseconds = 10000;
-let map;
-let searchBox;
-let icon;
-let iconGreen;
-let iconRed;
-let trafficLayer;
+
 let infoWindows = [];
 let mapMarkers = [];
 
 function initMap() {
-  map = new google.maps.Map(document.getElementById('traffic_lights'), {
-      zoom: 12,
-      center: centerBucharest
-  });
+  map = createMap(centerBucharest);
 
-  createLabel('Traffic Lights Map');
+  // createLabel('Traffic Lights Map');
+  createSearchBox(map, mapboxgl, base_country);
+  map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
+  map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+  createButtons(map, visibility=0, infoWindows=1, recenter=1, mapMode=1);
 
-  createSearchBox();
-
-  icon = createIcon('hiddenTrafficLightIcon');
   iconGreen = createIcon('hiddenTrafficLightGreenIcon');
   iconRed = createIcon('hiddenTrafficLightRedIcon');
-
-  trafficLayer = new google.maps.TrafficLayer();
-  createButtons();
-
-  displayMarkers();
+  icon = createIcon('hiddenTrafficLightIcon');
+  displayMarkers(iconGreen, iconRed, icon);
   
-  setInterval(displayMarkers, milliseconds);
+  updateMapMode(map);
+
+  // setInterval(displayMarkers, milliseconds);
 }
 
-async function fetchMarkerData() {
-  try {
-    const response = await fetch('/trafficLightsData');
-    return await response.json();
-  } catch (error) {
-    console.error('Error fetching marker trafficLightsData:', error);
-    return [];
-  }
-}
-
-async function displayMarkers() {
+async function displayMarkers(iconGreen, iconRed, icon) {
   // Fetch marker data from Django backend
-  const markers = await fetchMarkerData();
+  const markers = await fetchMarkerData('/trafficLightsData');
 
   // Iterate over the markers array
   markers.forEach((markerData, index) => {
@@ -57,7 +37,7 @@ async function displayMarkers() {
     // If an existing marker is found and its data has changed, update it
     if (existingMarker && existingMarker.dataChanged(markerData)) {
         existingMarker.infoWindow.setContent(createContentTrafficLight(markerData));
-        existingMarker.marker.setIcon(chooseMarkerIcon(markerData.functioning));
+        existingMarker.marker.setIcon(chooseMarkerIcon(markerData.functioning, iconGreen, iconRed, icon));
         existingMarker.data = markerData;
     } else {
         // Build the marker content
@@ -74,7 +54,7 @@ async function displayMarkers() {
         const marker = new google.maps.Marker({
             position: { lat: markerData.lat, lng: markerData.lng },
             map,
-            icon: chooseMarkerIcon(markerData.functioning),
+            icon: chooseMarkerIcon(markerData.functioning, iconGreen, iconRed, icon),
             title: markerData.title,
         });
 
@@ -98,7 +78,7 @@ async function displayMarkers() {
   });
 }
 
-function chooseMarkerIcon(functioning) {
+function chooseMarkerIcon(functioning, iconGreen, iconRed, icon) {
   switch (functioning) {
     case true:
       return iconGreen;
@@ -108,70 +88,4 @@ function chooseMarkerIcon(functioning) {
       console.log('Unknown icon in traffic_lights.js');
       return icon;
   }
-}
-
-function createButtons() {
-  // Create a custom control div to hold the buttons
-  var customControlDiv = document.createElement('div');
-
-  var closeInfoWindowsButton = createCloseInfoWindowsButton();
-  customControlDiv.appendChild(closeInfoWindowsButton);
-
-  var recenterButton = createRecenterButton();
-  customControlDiv.appendChild(recenterButton);
-
-  var toggleTrafficLayerButton = createToggleTrafficLayerButton();
-  customControlDiv.appendChild(toggleTrafficLayerButton);
-
-  // Add the custom control to the map
-  map.controls[google.maps.ControlPosition.TOP_RIGHT].push(customControlDiv);
-}
-
-function createLabel(textContent) {
-  // Create a custom control div to hold the buttons
-  var customLabelDiv = document.createElement('div');
-
-  var label = createMapLabel(textContent);
-  customLabelDiv.appendChild(label);
-
-  // Add the custom control to the map
-  map.controls[google.maps.ControlPosition.TOP_LEFT].push(customLabelDiv);
-}
-
-function createSearchBox() {
-  // Create a custom control div to search input
-  var customControlDiv = document.createElement('div');
-
-  var searchInput = document.getElementById('search-input');
-  searchInput.style.width = '300px';
-  customControlDiv.appendChild(searchInput);
-
-  // Add the custom control to the map at top center position
-  map.controls[google.maps.ControlPosition.TOP_CENTER].push(customControlDiv);
-
-    searchBox = new google.maps.places.SearchBox(searchInput, {
-      componentRestrictions: {'country': [base_country.toLowerCase()]},
-    });
-
-  searchBox.addListener('places_changed', function() {
-      var places = searchBox.getPlaces();
-      if (places.length == 0) {
-          return;
-      }
-
-      // Process the selected place (e.g., center the map)
-      var bounds = new google.maps.LatLngBounds();
-      places.forEach(function(place) {
-          if (!place.geometry) {
-              console.log("Returned place contains no geometry");
-              return;
-          }
-
-          // Fit the map to the bounds of the selected place
-          bounds.extend(place.geometry.location);
-      });
-
-      map.fitBounds(bounds);
-      map.setZoom(14);
-  });
 }
