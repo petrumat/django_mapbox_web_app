@@ -6,16 +6,14 @@ const milliseconds = 1000;
 const circleRadius = 1500;
 
 let map;
-let searchBox;
 let icon;
-let trafficLayer;
 let infoWindows = [];
 let mapMarkers = [];
 let circles = [];
 
 function initMap() {
   map = new mapboxgl.Map({
-    container: 'generate_alerts',
+    container: 'map',
     style: 'mapbox://styles/mapbox/streets-v11',
     center: centerBucharest,
     zoom: 12
@@ -56,6 +54,8 @@ function initMap() {
     }
   });
 
+  // Needs function to add point on map to generate alert around it
+
   // setInterval(displayMarkers, milliseconds);
 }
 
@@ -75,12 +75,18 @@ async function displayMarkers() {
   markers.forEach((markerData) => {
     const existingMarker = mapMarkers.find(marker => marker.id === markerData.id);
 
+    // If an existing marker is found and its data has changed, update it
     if (existingMarker && existingMarker.dataChanged(markerData)) {
       existingMarker.infoWindow.setText(createContentGenerateAlerts(markerData));
       existingMarker.data = markerData;
       updateCircle(existingMarker.id, markerData);
     } else {
-      
+    // NEEDS WORK !
+      // Build the marker content
+      const contentString = createContentGenerateAlerts(markerData);
+      // Create a new InfoWindow instance for each marker
+    // NEEDS WORK !
+
       const marker = new mapboxgl.Marker({
         element: icon,
       })
@@ -141,10 +147,17 @@ function updateCircle(markerId, markerData) {
           "base": 1.75,
           "stops": [[12, 2], [22, circleRadius / 10]]
         },
+        'circle-stroke-width': 3,
         "circle-color": "#FFCC33",
         "circle-opacity": 0.4
       }
     });
+    circles.push({
+      id: `circle-${markerId}`,
+      lng: markerData.lng,
+      lat: markerData.lat
+    });
+
     circles[markerId] = true;
   }
 }
@@ -161,8 +174,8 @@ function createButtons() {
   const recenterButton = createRecenterButton();
   customControlDiv.appendChild(recenterButton);
 
-  const toggleTrafficLayerButton = createToggleTrafficLayerButton();
-  customControlDiv.appendChild(toggleTrafficLayerButton);
+  const toggleMapModeButton = createToggleMapModeButton();
+  customControlDiv.appendChild(toggleMapModeButton);
 
   map.addControl({
     onAdd: function() {
@@ -190,7 +203,6 @@ function createLabel(textContent) {
       customLabelDiv.parentNode.removeChild(customLabelDiv);
     }
   }, 'top-left');
-
 }
 
 function createSearchBox() {
@@ -243,6 +255,15 @@ function addMarker(lat, lng, label) {
       infoWindow.addTo(map);
     });  
 
+  // NEEDS WORK!
+    // const infoWindow = new google.maps.InfoWindow({
+    //   content: "New Marker"
+    // });
+    // marker.addListener("click", () => {
+    //   infoWindow.open({ anchor: marker, map });
+    // });
+  // NEEDS WORK!
+  
   mapMarkers.push(marker);
   saveMarkerToBackend(lat, lng, label);
 }
