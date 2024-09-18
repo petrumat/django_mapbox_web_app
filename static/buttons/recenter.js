@@ -1,7 +1,7 @@
 function createRecenterButton() {
     // Create a button to center the map to Bucharest
     var button = document.createElement('button');
-    button.textContent = 'Recenter Map';
+    button.textContent = 'Recenter';
     button.classList.add('map-button');
 
     // Add click event listener for the recenter button

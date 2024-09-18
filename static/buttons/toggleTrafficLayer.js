@@ -1,7 +1,6 @@
 function createToggleTrafficLayerButton() {
-    // Create a button for toggling layers on the map
     var button = document.createElement('button');
-    button.textContent = 'Toggle Traffic Layer';
+    button.textContent = 'Dark Mode';
     button.classList.add('map-button');
 
     var isTrafficLayer = false;
@@ -10,9 +9,11 @@ function createToggleTrafficLayerButton() {
     button.addEventListener('click', function() {
         if (isTrafficLayer) {
             map.setStyle('mapbox://styles/mapbox/streets-v11');
+            button.textContent = 'Dark Mode';
             isTrafficLayer = false;
         } else {
             map.setStyle('mapbox://styles/mapbox/traffic-night-v2');
+            button.textContent = 'Light Mode';
             isTrafficLayer = true;
         }
     });

@@ -1,7 +1,7 @@
 function createToggleAreaVisibilityButton() {
     // Create a button for toggling area visibility
     var button = document.createElement('button');
-    button.textContent = 'Area Visibility';
+    button.textContent = 'Visibility';
     button.classList.add('map-button');
 
     // Add click event listener for the area visibility button
@@ -14,13 +14,15 @@ function createToggleAreaVisibilityButton() {
 
 function toggleAreaVisibility() {
     circles.forEach(circle => {
-        if (map.getLayer(circle.id)) {
+        const layerId = circle.id;
+
+        if (map.getLayer(layerId)) {
             // If the circle is visible (exists as a layer), remove it
-            map.removeLayer(circle.id);
-            map.removeSource(circle.id);
+            map.removeLayer(layerId);
+            map.removeSource(layerId);
         } else {
             // If the circle is not visible, add it back to the map
-            map.addSource(circle.id, {
+            map.addSource(layerId, {
                 type: 'geojson',
                 data: {
                     type: 'Feature',
@@ -32,9 +34,9 @@ function toggleAreaVisibility() {
             });
 
             map.addLayer({
-                id: circle.id,
+                id: layerId,
                 type: 'circle',
-                source: circle.id,
+                source: layerId,
                 paint: {
                     'circle-radius': circleRadius,
                     'circle-color': '#FFCC33',
