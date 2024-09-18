@@ -14,24 +14,25 @@ function initMap() {
   createSearchBox(map, mapboxgl, base_country);
   map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
   map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
-  createButtons(map, visibility=0, infoWindows=1, recenter=1, mapMode=1);
+  createButtons(map, 0, 1, 1, 1);
 
-  trafficInfoGreenIcon = createIcon('hiddenTrafficInfoGreenIcon');
-  trafficInfoYellowIcon = createIcon('hiddenTrafficInfoYellowIcon');
-  trafficInfoRedIcon = createIcon('hiddenTrafficInfoRedIcon');
-  displayMarkers(trafficInfoGreenIcon, trafficInfoYellowIcon, trafficInfoRedIcon);
+  const trafficInfoGreenIcon = createIcon('hiddenTrafficInfoGreenIcon');
+  const trafficInfoYellowIcon = createIcon('hiddenTrafficInfoYellowIcon');
+  const trafficInfoRedIcon = createIcon('hiddenTrafficInfoRedIcon');
+  displayMarkers(map, '/trafficInfoData', trafficInfoGreenIcon, trafficInfoYellowIcon, trafficInfoRedIcon);
+
   
   // NEEDS WORK! Function to add point on map with user info
-  addMarkerEvent(map, mapboxgl, icon, infoWindow, mapMarkers, '/saveInfo');
+  addMarkerEventTrafficInfo(map, mapboxgl, trafficInfoGreenIcon, trafficInfoYellowIcon, trafficInfoRedIcon, '/saveInfo');
 
   updateMapMode(map);
 
   // setInterval(displayMarkers, milliseconds);
 }
 
-async function displayMarkers() {
+async function displayMarkers(map, link, trafficInfoGreenIcon, trafficInfoYellowIcon, trafficInfoRedIcon) {
   // Fetch marker data from Django backend
-  const markers = await fetchMarkerData('/trafficInfoData');
+  const markers = await fetchMarkerData(link);
 
   // Iterate over the markers array
   markers.forEach((markerData, index) => {
@@ -43,42 +44,81 @@ async function displayMarkers() {
         existingMarker.marker.setIcon(chooseMarkerIcon(markerData.icon, trafficInfoGreenIcon, trafficInfoYellowIcon, trafficInfoRedIcon));
         existingMarker.data = markerData;
     } else {
-        // Build the marker content
-        const contentString = createContentTrafficInfo(markerData);
+        // NEEDS WORK !
+      // Build the marker content
+      const contentString = createContentGenerateAlerts(markerData);
+      // Create a new InfoWindow instance for each marker
+    // NEEDS WORK !
 
-        // Create a new InfoWindow instance for each marker
-        const infoWindow = new google.maps.InfoWindow({
-            content: contentString,
-            ariaLabel: markerData.ariaLabel,
-        });
-        infoWindows.push(infoWindow);
+      const marker = new mapboxgl.Marker({
+        element: chooseMarkerIcon(markerData.icon, trafficInfoGreenIcon, trafficInfoYellowIcon, trafficInfoRedIcon),
+      })
+      .setLngLat([markerData.lng, markerData.lat])
+      .addTo(map);
 
-        // Create a marker and attach the info window to it
-        const marker = new google.maps.Marker({
-            position: { lat: markerData.lat, lng: markerData.lng },
-            map,
-            icon: chooseMarkerIcon(markerData.icon, trafficInfoGreenIcon, trafficInfoYellowIcon, trafficInfoRedIcon),
-            title: markerData.title,
-        });
+      const popup = new mapboxgl.Popup({ offset: 25 })
+        .setText(createContentGenerateAlerts(markerData));
 
-        // Add a click event listener to the marker
-        marker.addListener("click", () => {
-          infoWindow.open({ anchor: marker, map });
-        });
+      marker.getElement().addEventListener('click', () => {
+        popup.addTo(map);
+      });
 
-        // Add the marker to the array of marker objects
-        mapMarkers.push({
-            id: markerData.id,
-            marker,
-            infoWindow,
-            data: markerData,
-            dataChanged(newData) {
-                // Check if any property of the marker's data has changed
-                return JSON.stringify(this.data) !== JSON.stringify(newData);
-            }
-        });
+      mapMarkers.push({
+        id: markerData.id,
+        marker,
+        infoWindow: popup,
+        data: markerData,
+        dataChanged(newData) {
+          return JSON.stringify(this.data) !== JSON.stringify(newData);
+        }
+      });
     }
   });
+}
+
+function addMarkerEventTrafficInfo(map, mapboxgl, trafficInfoGreenIcon, trafficInfoYellowIcon, trafficInfoRedIcon, link) {
+  map.on('contextmenu', function(event) {
+      const lng = event.lngLat.lng;
+      const lat = event.lngLat.lat;
+  
+      // Geocode the coordinates to get the address
+      geocodeLatLng(lat, lng, (address) => {
+          if (address) {
+              addMarkerTrafficInfo(lat, lng, address, map, mapboxgl, trafficInfoGreenIcon, trafficInfoYellowIcon, trafficInfoRedIcon, link);
+          } else {
+              console.error('Failed to get address for the coordinates.');
+          }
+      }, mapboxgl);
+  });
+}
+
+function addMarkerTrafficInfo(lat, lng, label, map, mapboxgl, trafficInfoGreenIcon, trafficInfoYellowIcon, trafficInfoRedIcon, link) {
+  const marker = new mapboxgl.Marker({
+      element: chooseMarkerIcon("green", trafficInfoGreenIcon, trafficInfoYellowIcon, trafficInfoRedIcon),
+  })
+  .setLngLat([lng, lat])
+  .addTo(map);
+
+  const infoWindow = mapboxgl.Popup({ offset: 25 })
+      .setText("New Marker")
+      .setLngLat([lng, lat])
+      .addTo(map);
+  
+    marker.getElement().addEventListener('click', () => {
+          infoWindow.addTo(map);
+    });  
+
+  // NEEDS WORK!
+      // const infoWindow = new google.maps.InfoWindow({
+      //     content: "New Marker"
+      // });
+      // marker.addListener("click", () => {
+      //     infoWindow.open({ anchor: marker, map });
+      // });
+  // NEEDS WORK!
+  
+  mapMarkers.push(marker);
+  saveMarkerToBackend(lat, lng, label, link);
 }
 
 function chooseMarkerIcon(icon, trafficInfoGreenIcon, trafficInfoYellowIcon, trafficInfoRedIcon) {

@@ -76,6 +76,20 @@ function createButtons(map, visibility, infoWindows, recenter, mapMode) {
     }, 'top-right');
 }
 
+function createIcon(elementId) {
+    const imgSrc = document.getElementById(elementId).src;
+
+    const img = document.createElement('img');
+    img.src = imgSrc;
+    img.style.width = '50px';
+    img.style.height = '50px';
+    
+    img.style.position = 'relative';
+    img.style.transform = 'translate(-50%, -100%)';
+
+    return img;
+}
+
 async function fetchMarkerData(link) {
     try {
         const response = await fetch(link);
