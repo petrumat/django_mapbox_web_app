@@ -1,4 +1,4 @@
-function createToggleTrafficLayerButton() {
+function createToggleMapModeButton() {
     var button = document.createElement('button');
     button.textContent = 'Dark Mode';
     button.classList.add('map-button');
