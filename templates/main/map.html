@@ -4,24 +4,15 @@
 
 {% block extend_head %}
   <title>Map</title>
-  <style>
-    /* Style to make the map container cover the entire viewport */
-    .map-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1; /* Ensure the map stays behind other content */
-    }
-  </style>
+  
+  <div id="map-container"></div>
 {% endblock %}
 
 
 {% block content %}
-  <h3 id="map">Django Mapbox Web App - Map</h3>
+  <h3 id="map-route">Django Mapbox Web App - Map</h3>
 
-  <div id="map-route"></div>
+  <div id="map"></div>
 
   <div class="container">
 

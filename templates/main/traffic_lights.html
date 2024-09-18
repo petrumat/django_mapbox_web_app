@@ -8,19 +8,16 @@
 
 
 {% block content %}
-    <!-- Header of the page -->
-    <h3 id="map">Traffic Lights</h3>
+    <h3 id="traffic_lights">Traffic Lights</h3>
 
-    <!-- The map -->
-    <div id="traffic_lights"></div>
-
-    <input id="search-input" type="text" placeholder="Search for a location...">
+    <div id="map"></div>
 {% endblock %}
 
 
 {% block extend_footer %}
     <script type="text/javascript">
-        var google_api_key = "{{ google_api_key | safe }}";
+        var mapboxPublicToken = "{{ mapbox_public_token | safe }}";
+        var mapboxAccessToken = "{{ mapbox_access_token | safe }}";
         var base_country = "{{base_country|safe}}";
     </script>
 

@@ -6,11 +6,9 @@
 {% endblock %}
 
 {% block content %}
-    <!-- Header of the page -->
-    <h3 id="map">Generate Alerts</h3>
+    <h3 id="generate_alerts">Generate Alerts</h3>
 
-    <!-- The map -->
-    <div id="generate_alerts" style="width: 100%; height: 80%;"></div>
+    <div id="map"></div>
 {% endblock %}
 
 {% block extend_footer %}
@@ -20,8 +18,8 @@
         var base_country = "{{ base_country | safe }}";
     </script>
 
-    <!-- Include custom JS files -->
     <script src="{% static 'generate_alerts.js' %}"></script>
+    
     <script src="{% static 'buttons/toggleAreaVisibility.js' %}"></script>
     <script src="{% static 'buttons/closeInfoWindows.js' %}"></script>
     <script src="{% static 'buttons/recenter.js' %}"></script>

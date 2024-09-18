@@ -6,7 +6,6 @@ body {
   padding: 0;
   margin: 0;
 }
-
 body, html {
   height: 100%;
 }
@@ -40,12 +39,10 @@ h2 {
   margin-bottom: 10px;
   color: #000000;
 }
-
 .forgot-password a, .signup-link a, .signin-link a {
   color: blue;
   text-decoration: none;
 }
-
 .forgot-password a:hover, .signup-link a:hover, .signin-link a:hover {
   text-decoration: underline;
 }
@@ -58,7 +55,6 @@ h2 {
 .social-login {
   text-align: center;
 }
-
 .social-icons a {
   display: inline-block;
   margin: 0 5px;
@@ -66,9 +62,8 @@ h2 {
 
 #map { 
   width: 100%;
-  height: 10px;
+  height: 80%;
 }
-
 .map-container {
   position: fixed;
   top: 0;
@@ -76,16 +71,6 @@ h2 {
   width: 100%;
   height: 100%;
   z-index: -1; /* Ensure the map stays behind other content */
-}
-
-
-#map-route {
-  height: 80%;
-}
-
-
-#traffic_info {
-  height: 95%;
 }
 
 #hiddenTrafficInfoGreenIcon {
@@ -98,18 +83,8 @@ h2 {
   display: None;
 }
 
-
-#generate_alerts {
-  height: 95%;
-}
-
 #hiddenGenerateAlertIcon {
   display: None;
-}
-
-
-#traffic_lights {
-  height: 95%;
 }
 
 #hiddenTrafficLightIcon {
@@ -122,21 +97,14 @@ h2 {
   display: None;
 }
 
-
-#generate_reports {
-  height: 95%;
-}
-
 #hiddenGenerateReportIcon {
   display: None;
 }
-
 
 .logo {
   width: 150px;
   padding: 8px;
 }
-
 
 ul.sidenav {
   list-style-type: none;
@@ -149,19 +117,16 @@ ul.sidenav {
   height: 100%;
   overflow: auto;
 }
-
 ul.sidenav li a {
   display: block;
   color: #000;
   padding: 8px 16px;
   text-decoration: none;
 }
-
 ul.sidenav li a.active {
   background-color: #d7eef2;
   color: #111111;
 }
-
 ul.sidenav li a:hover:not(.active) {
   background-color: #b0dee5;
   color: black;
@@ -180,7 +145,6 @@ ul.sidenav li a:hover:not(.active) {
     height: auto;
     position: relative;
   }
-  
   ul.sidenav li a {
     float: left;
     padding: 15px;
@@ -232,7 +196,6 @@ input, select{
 
 }
 
-/* The container */
 .check-container {
   display: block;
   position: relative;
@@ -244,8 +207,6 @@ input, select{
   -ms-user-select: none;
   user-select: none;
 }
-
-/* Hide the browser's default checkbox */
 .check-container input {
   position: absolute;
   opacity: 0;
@@ -253,8 +214,6 @@ input, select{
   height: 0;
   width: 0;
 }
-
-/* Create a custom checkbox */
 .checkmark {
   position: absolute;
   top: 0;
@@ -263,30 +222,20 @@ input, select{
   width: 15px;
   background-color: #d3d0d0;
 }
-
-/* On mouse-over, add a grey background color */
 .check-container:hover input ~ .checkmark {
   background-color: #ccc;
 }
-
-/* When the checkbox is checked, add a green background */
 .check-container input:checked ~ .checkmark {
   background-color: orangered;
 }
-
-/* Create the checkmark/indicator (hidden when not checked) */
 .check-container:after {
   content: "";
   position: absolute;
   display: none;
 }
-
-/* Show the checkmark when checked */
 .check-container input:checked ~ .checkmark:after {
   display: block;
 }
-
-/* Style the checkmark/indicator */
 .check-container .checkmark:after {
   left: 9px;
   top: 5px;
@@ -305,15 +254,12 @@ input, select{
   width: 60px;
   height: 34px;
 }
-
-/* Hide default HTML checkbox */
 .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-/* The slider */
 .slider {
   position: absolute;
   cursor: pointer;
@@ -325,7 +271,6 @@ input, select{
   -webkit-transition: .4s;
   transition: .4s;
 }
-
 .slider:before {
   position: absolute;
   content: "";
@@ -337,25 +282,20 @@ input, select{
   -webkit-transition: .4s;
   transition: .4s;
 }
-
 input:checked + .slider {
   background-color: #d7eef2;
 }
-
 input:focus + .slider {
   box-shadow: 0 0 1px #9c07b6;
 }
-
 input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
-
 .slider.round {
   border-radius: 34px;
 }
-
 .slider.round:before {
   border-radius: 50%;
 }
@@ -368,7 +308,6 @@ button[type=submit] {
   border-radius: 4px;
   cursor: pointer;
 }
-
 button[type=submit]:hover {
   background-color: #b0dee5;
 }
@@ -384,16 +323,13 @@ table {
   border-collapse: collapse;
   width: 100%;
 }
-
 table td, table th {
   border: 1px solid #ddd;
   padding: 8px;
 }
-
 table tr:hover {
   background-color: #ddd;
 }
-
 table th {
   padding-top: 12px;
   padding-bottom: 12px;
@@ -423,7 +359,6 @@ input, select, .btn {
   line-height: 20px;
   text-decoration: none; /* remove underline from anchors */
 }
-
 input:hover, .btn:hover {
   opacity: 1;
 }
@@ -477,7 +412,6 @@ input:hover, .btn:hover {
 .mapboxgl-ctrl-top-left .mapboxgl-ctrl-geocoder {
   margin-top: 15px;
 }
-
 .mapboxgl-ctrl-geocoder {
   background-color: transparent !important;
   border: none !important;
