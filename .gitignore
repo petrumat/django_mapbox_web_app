@@ -1,8 +1,9 @@
-reCAPTCHA details.txt
 .project_venv/
 .vscode/
 
 db.sqlite3
+accounts*
+example_routes*
 
 main/__pycache__/
 main/migrations/
@@ -20,9 +21,6 @@ testing/management/__pycache__
 testing/management/commands/__pycache__
 testing/load_test.py
 
-cpython-311.pyc
-accounts.json
-example_routes.json
 static/miscellaneous.js
 static/miscellaneous.css
 
