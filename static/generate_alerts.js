@@ -16,13 +16,13 @@ function initMap() {
   createSearchBox(map, mapboxgl, base_country);
   map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
   map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
-  createButtons(map, visibility=1, infoWindows=1, recenter=1, mapMode=1);
+  createButtons(map, 1, 1, 1, 1);
 
   icon = createIcon('hiddenGenerateAlertIcon');
-  displayMarkers();
+  displayMarkers('/generateAlertsData', icon);
   
   // NEEDS WORK! Function to add point on map to generate alert around it:
-  addMarkerEvent(map, mapboxgl, icon, infoWindow, mapMarkers, '/saveAlert');
+  addMarkerEvent(map, mapboxgl, icon, mapMarkers, '/saveAlert');
 
   updateMapMode(map);
 
@@ -30,8 +30,8 @@ function initMap() {
 }
 
 // NEEDS WORK!
-async function displayMarkers(link) {
-  const markers = await fetchMarkerData('/generateAlertsData');
+async function displayMarkers(link, icon) {
+  const markers = await fetchMarkerData(link);
 
   markers.forEach((markerData) => {
     const existingMarker = mapMarkers.find(marker => marker.id === markerData.id);

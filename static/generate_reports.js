@@ -14,21 +14,21 @@ function initMap() {
   createSearchBox(map, mapboxgl, base_country);
   map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
   map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
-  createButtons(map, visibility=0, infoWindows=1, recenter=1, mapMode=1);
+  createButtons(map, 0, 1, 1, 1);
 
   icon = createIcon('hiddenGenerateReportIcon');
-  displayMarkers();
+  displayMarkers(map, '/generateReportsData', icon);
   
   // NEEDS WORK!
-  addMarkerEvent(map, mapboxgl, icon, infoWindow, mapMarkers, '/saveReport');
+  addMarkerEvent(map, mapboxgl, icon, mapMarkers, '/saveReport');
 
   updateMapMode(map);
 
   // setInterval(displayMarkers, milliseconds);
 }
 
-async function displayMarkers() {
-  const markers = await fetchMarkerData('/generateReportsData');
+async function displayMarkers(map, link, icon) {
+  const markers = await fetchMarkerData(link);
 
   markers.forEach((markerData, index) => {
     const existingMarker = mapMarkers.find(marker => marker.id === markerData.id);

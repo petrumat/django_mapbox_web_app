@@ -14,21 +14,21 @@ function initMap() {
   createSearchBox(map, mapboxgl, base_country);
   map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
   map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
-  createButtons(map, visibility=0, infoWindows=1, recenter=1, mapMode=1);
+  createButtons(map, 0, 1, 1, 1);
 
   iconGreen = createIcon('hiddenTrafficLightGreenIcon');
   iconRed = createIcon('hiddenTrafficLightRedIcon');
   icon = createIcon('hiddenTrafficLightIcon');
-  displayMarkers(iconGreen, iconRed, icon);
+  displayMarkers(map, '/trafficLightsData', iconGreen, iconRed, icon);
   
   updateMapMode(map);
 
   // setInterval(displayMarkers, milliseconds);
 }
 
-async function displayMarkers(iconGreen, iconRed, icon) {
+async function displayMarkers(map, link, iconGreen, iconRed, icon) {
   // Fetch marker data from Django backend
-  const markers = await fetchMarkerData('/trafficLightsData');
+  const markers = await fetchMarkerData(link);
 
   // Iterate over the markers array
   markers.forEach((markerData, index) => {
@@ -54,7 +54,7 @@ async function displayMarkers(iconGreen, iconRed, icon) {
         const marker = new google.maps.Marker({
             position: { lat: markerData.lat, lng: markerData.lng },
             map,
-            icon: chooseMarkerIcon(markerData.functioning, iconGreen, iconRed, icon),
+            icon: chooseMarkerIcon(true, iconGreen, iconRed, icon),
             title: markerData.title,
         });
 

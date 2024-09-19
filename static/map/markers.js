@@ -1,18 +1,4 @@
-function createIcon(elementId) {
-    const imgSrc = document.getElementById(elementId).src;
-
-    const img = document.createElement('img');
-    img.src = imgSrc;
-    img.style.width = '50px';
-    img.style.height = '50px';
-    
-    img.style.position = 'relative';
-    img.style.transform = 'translate(-50%, -100%)';
-
-    return img;
-}
-
-function addMarkerEvent(map, mapboxgl, icon, infoWindow, mapMarkers, link) {
+function addMarkerEvent(map, mapboxgl, icon, mapMarkers, link) {
     map.on('contextmenu', function(event) {
         const lng = event.lngLat.lng;
         const lat = event.lngLat.lat;
@@ -20,7 +6,7 @@ function addMarkerEvent(map, mapboxgl, icon, infoWindow, mapMarkers, link) {
         // Geocode the coordinates to get the address
         geocodeLatLng(lat, lng, (address) => {
             if (address) {
-                addMarker(lat, lng, address, map, mapboxgl, icon, infoWindow, mapMarkers, link);
+                addMarker(lat, lng, address, map, mapboxgl, icon, mapMarkers, link);
             } else {
                 console.error('Failed to get address for the coordinates.');
             }
@@ -46,7 +32,7 @@ function geocodeLatLng(lat, lng, callback, mapboxgl) {
       });
 }
 
-function addMarker(lat, lng, label, map, mapboxgl, icon, infoWindow, mapMarkers, link) {
+function addMarker(lat, lng, label, map, mapboxgl, icon, mapMarkers, link) {
     const marker = new mapboxgl.Marker({
         element: icon,
     })
