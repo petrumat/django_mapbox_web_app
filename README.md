@@ -1,4 +1,4 @@
-# Google Maps Web Application
+# Django and Mapbox Web Application
 
 ## Credits
 
@@ -33,16 +33,11 @@ In case of any error regarding package importing from VS Code refer to [How to r
 
 ## Necessities
 
-Don't forget to activate the following Google API's after you create a Google Account and activate a billing account:
+Don't forget to create Google OAuth key to use third party authentication with Google account. To do this go to <https://console.cloud.google.com/apis/credentials/consent> and login with your account:
 
-- reCAPTURE
-- Places API
-- Maps Javascript API
-- Directions API
-- Distance Matrix API
-- Geocoding API
-
-As it turns out, the features provided by Google Maps APIs are not free and will have an approximate cost of $20 per month for an average of 1000 API requests (from each API, except reCAPTURE). Alternatives to [Google Maps](https://developers.google.com/maps) are: [Mapbox](https://www.mapbox.com/), [Apple Maps](https://developer.apple.com/maps/), [Microsoft Azure Maps](https://www.microsoft.com/en-us/maps), and others.
+- from '*Select a project*' create a new project with any name (e.g. Django-Mapbox-App) and 'No organization' as 'Location'. From '*OAuth consent screen*' select 'User Type' as external and click '*Create*'. Fill in app name, user support email, app logo (optional), application home page (optional), application privacy policy link (optional), application terms of service link (optional), authorized domains (optional), developer contact information. You can skip 'Scope' and 'Test users' for now.
+- go to '*Credentials*' and click on 'Create Credentials' and select 'OAuth client ID'. From 'Application type' select 'Web application' and input 'name'. After this click on 'Add URL' under 'Authorized JavaScript origins' and add '<http://127.0.0.1:8000>' and '<http://localhost:8000>'. Also under 'Authorized redirect URIs' add '<http://127.0.0.1:8000/google/login>' and '<http://localhost:8000/google/login/>'. Note: It may take 5 minutes to a few hours for settings to take effect. After this save 'Client ID' and 'Client secret' in *main_app/.env* file.
+- make sure to register reCAPTCHA on <https://www.google.com/recaptcha/admin/create>. Input a label, select 'Score based (v3)' as type and add domain "localhost' (optional). After this save the site key and secret key in *main_app/.env* file.
 
 ## Future Improvements
 
