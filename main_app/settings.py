@@ -28,13 +28,12 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
-# ALLOWED_HOSTS = []
 
 
 # Application definition
 
 INSTALLED_APPS = [
-        'django.contrib.admin',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -47,9 +46,9 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     # 'allauth.socialaccount.providers.facebook',
 
-    'main',
-    'users',
-    'testing',
+    'main.apps.MainConfig',
+    'users.apps.UsersConfig',
+    'testing.apps.AppConfig',
 ]
 
 AUTHENTICATION_BACKENDS = [
