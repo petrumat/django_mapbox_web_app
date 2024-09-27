@@ -25,7 +25,7 @@ Use following commands to get the project up and running. Working with an enviro
 8) *pip freeze > requirements.txt* (**optional**) to update requirements.txt file if you install any other python package to your virtual environment not already used in this project.
 9) *cp main_app\\.env_template main_app\\.env* to create .env file based on .env_template file. Update all fields with your correct information.
 10) *python manage.py makemigrations* to package up your model changes into individual migration files. Run this every time you make changes to data base structure or format or if needed.
-11) *python manage.py migrate --run-syncdb* to create tables, modify columns, add indexes, and performs any other database-related operations needed to reflect the changes you've made. Run this every time you make changes to data base structure or format or if needed.
+11) *python manage.py migrate --run-syncdb* to create tables, modify columns, add indexes, and performs any other database-related operations needed to reflect the changes you've made. Run this every time you make changes to data base structure or format or if needed. Also, use this command to make migrations for the **user model**, if needed, *python manage.py makemigrations users*.
 12) *python manage.py runserver* to run the development server.
 13) visit *<http://localhost:8000>* as the home page
 
