@@ -29,24 +29,28 @@
           <td>{{request.user.first_name|title}} {{request.user.last_name|title}}</td>      
         </tr>
 
-        {% if request.user.userprofile.has_profile %}
-
-          <tr>
-            <td>Address</td>
-            <td>
-              <address>
-                {{request.user.userprofile.address}}<br>
-                {{request.user.userprofile.town}}<br>
-                {{request.user.userprofile.county}}<br>
-                {{request.user.userprofile.post_code}}<br>
-              </address>
-            </td>      
-          </tr>
-
+        {% if request.user.userprofile %}
+          {% if request.user.userprofile.has_profile %}
+            <tr>
+              <td>Address</td>
+              <td>
+                <address>
+                  {{request.user.userprofile.address}}<br>
+                  {{request.user.userprofile.town}}<br>
+                  {{request.user.userprofile.county}}<br>
+                  {{request.user.userprofile.post_code}}<br>
+                </address>
+              </td>      
+            </tr>
+          {% else %}
+            <tr>
+              <td>User Profile</td>
+              <td><a href="{% url 'users:profile' %}" >Create user Profile</a></td>
+            </tr>
+          {% endif %}
         {% else %}
           <tr>
-            <td>User Profile</td>
-            <td><a href="{% url 'users:profile' %}" >Create user Profile</a></td>
+            <td colspan="2">No profile available</td>
           </tr>
         {% endif %}
       </tbody>

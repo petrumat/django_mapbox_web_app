@@ -12,11 +12,23 @@ init(autoreset=True)
 
 
 def main():
-    # add_traffic_info_marker()
-    # add_traffic_light_marker()
-    # add_generate_alert_marker()
-    # add_generate_report_marker()
-    print(Fore.YELLOW + f'Select a marker to add to model.')
+    command = input('What type of marker to add in db model? ')
+    match command:
+        case 'traffic_info' | 'traffic info' | 'ti' | 'traffic':
+            add_traffic_info_marker()
+        case 'traffic_light' | 'traffic light' | 'tl' | 'light':
+            add_traffic_light_marker()
+        case 'generate_alert' | 'generate alert' | 'ga' | 'alert':
+            add_generate_alert_marker()
+        case 'generate_report' | 'generate report' | 'gr' | 'report':
+            add_generate_report_marker()
+        case 'all':
+            add_traffic_info_marker()
+            add_traffic_light_marker()
+            add_generate_alert_marker()
+            add_generate_report_marker()
+        case _:
+            print(Fore.YELLOW + f'Select a marker to add to model.')
 
 
 def add_traffic_info_marker():

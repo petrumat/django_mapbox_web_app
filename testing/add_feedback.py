@@ -11,9 +11,14 @@ init(autoreset=True)
 
 
 def main():
-    # add_feedback()
-    # remove_feedback()
-    print(Fore.YELLOW + f'Select action: add/remove feedback.')
+    command = input('Add or remove feedback from db model? ')
+    match command:
+        case 'add' | 'a':
+            add_feedback()
+        case 'remove' | 'r':
+            remove_feedback()
+        case _:
+            print(Fore.YELLOW + f'Select action: add / remove.')
 
 
 def add_feedback():

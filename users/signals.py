@@ -7,13 +7,13 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 @receiver(post_save, sender=User)
-def create_profile(sender, instance, created, **kwargs):
+def create_user_profile(sender, instance, created, **kwargs):
 	if created:
 		logging.info(f"Creating profile for user {instance.username}")
-		userprofile = UserProfile.objects.create(user=instance)
+		UserProfile.objects.create(user=instance)
 		
 @receiver(post_save, sender=User)
-def save_profile(sender, instance, **kwargs):
+def save_user_profile(sender, instance, **kwargs):
 	try:
 		logging.info(f"Saving profile for user {instance.username}")
 		instance.userprofile.save()
