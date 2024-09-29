@@ -12,7 +12,7 @@
         <h1>Received Feedback List</h1>
         {% for feedback in feedback_list %}
             <div class="card">
-                <div class="card-header"> {{ feedback.title }} </div>    
+                <div class="card-header" style="color: blue;"> {{ feedback.title }} </div>    
                 <div class="card-body">
                     <p class="card-text">
                         <strong>id:</strong> {{ feedback.id }}</br>
@@ -20,7 +20,12 @@
                         <strong>updated:</strong> {{ feedback.updated }}</br>
                         <strong>user:</strong> {{ feedback.user }}</br>
                         <strong>description:</strong> {{ feedback.description }}</br>
-                        <strong>photo:</strong> {{ feedback.photo }}</br>
+                        <strong>photo:</strong> 
+                            {% if feedback.photo %}
+                                <img src="{{ feedback.photo.url }}" alt="Feedback photo">
+                            {% else %}
+                                No photo uploaded
+                            {% endif %}</br>
                     </p>
                 </div>
             </div>

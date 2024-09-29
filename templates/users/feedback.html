@@ -16,13 +16,13 @@
         <form id="feedbackform" method="POST" action="/feedback" enctype="multipart/form-data">
             {% csrf_token %}
 
-            <label for="title">Title</label>
+            <label for="title">Title:</label>
             {{ form.title }}
 
-            <label for="description">Description</label>
+            <label for="description">Description:</label>
             {{ form.description }}
 
-            <label for="photo">Photo</label>
+            <label for="photo">Upload Photo:</label>
             {{ form.photo }}
 
             <button type="submit">Submit Feedback</button>
