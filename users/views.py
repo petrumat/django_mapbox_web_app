@@ -22,10 +22,11 @@ from reportlab.platypus import Table, TableStyle
 from reportlab.lib import colors
 import json
 import io
+from django.db.models import Q
 
 from main_app.mixins import	AjaxFormMixin, reCAPTCHAValidation, FormErrors,	is_ajax
 from .forms import UserForm, UserProfileForm, AuthForm,	UsernameForm, FeedbackForm
-from .models import TrafficInfo, TrafficLight, GenerateAlert, GenerateReport, Feedback
+from .models import UserProfile, TrafficInfo, TrafficLight, GenerateAlert, GenerateReport, Feedback
 from .utils import update_traffic_info_data, update_traffic_lights_data, update_generate_alerts_data, update_generate_reports_data
 
 
@@ -135,9 +136,19 @@ class SignInView(AjaxFormMixin, FormView):
 		response = super(AjaxFormMixin, self).form_valid(form)	
 		
 		if is_ajax(self.request):
-			username = form.cleaned_data.get('username')
+			username_or_email = form.cleaned_data.get('username')
 			password = form.cleaned_data.get('password')
-			#attempt to authenticate user
+
+			try:
+				user_profile = UserProfile.objects.get(
+					Q(user__username=username_or_email) | Q(user__email=username_or_email)
+				)
+				user = user_profile.user
+				username = user.username
+			except UserProfile.DoesNotExist:
+				user = None
+				username = None
+			
 			user = authenticate(self.request, username=username, password=password)
 			
 			if user is not None:
@@ -145,7 +156,9 @@ class SignInView(AjaxFormMixin, FormView):
 				result = "Success"
 				message = 'You are now logged in'
 			else:
-				message = FormErrors(form)
+				result = "Error"
+				message = FormErrors(form) + 'User does not exist or incorrect credentials'
+
 			data = {'result': result, 'message': message}
 			return JsonResponse(data)
 		

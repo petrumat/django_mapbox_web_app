@@ -14,7 +14,13 @@ function DirectionsToggle(){
 
 
 function ShowAlert(title, message, type, redirect){
-    
+    var validTypes = ['success', 'info', 'warning', 'error'];
+
+    if (validTypes.indexOf(type) === -1) {
+        console.error(`Invalid toastr type: ${type}. Defaulting to 'info'.`);
+        type = 'info';
+    }
+
     if (redirect){
       toastr[type](message, title, {
           positionClass: 'toast-bottom-right',
@@ -36,11 +42,8 @@ function ShowAlert(title, message, type, redirect){
           newestOnTop: true,
           rtl: $("body").attr("dir") === "rtl" || $("html").attr("dir") === "rtl",
           timeOut: 1000,
-
       });
-
     }
-   
 };
 
 function showPword() {

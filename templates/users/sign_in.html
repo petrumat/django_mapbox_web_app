@@ -16,7 +16,7 @@
 
     <form id="signinform" method="POST" action="/sign-in">
       {% csrf_token %}
-      <label for="id_username">Username</label>
+      <label for="id_username">Username or Email</label>
       {{form.username}}
 
       <label for="id_password">Password</label>
