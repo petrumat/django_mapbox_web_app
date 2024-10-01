@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, reverse
 from django.urls import reverse_lazy
 from django.contrib.sites.shortcuts import get_current_site
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth import login, logout, authenticate, get_user_model
@@ -34,7 +35,6 @@ result = "Error"
 message = "There was an error, please try again"
 
 
-
 # User Classes and Functions
 
 class AccountView(TemplateView):
@@ -47,6 +47,8 @@ class AccountView(TemplateView):
 	def dispatch(self, *args, **kwargs):
 		return super().dispatch(*args, **kwargs)
 
+
+@login_required()
 def profile_view(request):
 	'''
 	function view to allow users to update their profile
@@ -224,10 +226,12 @@ def sign_out(request):
 
 # Traffic Info Functions
 
+@staff_member_required()
 def trafficInfoList(request):
 	traffic_info_list = TrafficInfo.objects.all()
 	return render(request, 'lists/traffic_info_list.html', {'traffic_info_list': traffic_info_list})
 
+@login_required()
 def trafficInfoData(request):
 	update_traffic_info_data()
 	markers = TrafficInfo.objects.all().values()
@@ -237,10 +241,12 @@ def trafficInfoData(request):
 
 # Traffic Lights Functions
 
+@staff_member_required()
 def trafficLightsList(request):
 	traffic_lights_list = TrafficLight.objects.all()
 	return render(request, 'lists/traffic_lights_list.html', {'traffic_lights_list': traffic_lights_list})
 
+@login_required()
 def trafficLightsData(request):
 	update_traffic_lights_data()
 	markers = TrafficLight.objects.all().values()
@@ -250,15 +256,18 @@ def trafficLightsData(request):
 
 # Generate Alerts Functions
 
+@staff_member_required()
 def generateAlertsList(request):
 	generate_alerts_list = GenerateAlert.objects.all()
 	return render(request, 'lists/generate_alerts_list.html', {'generate_alerts_list': generate_alerts_list})
 
+@login_required()
 def generateAlertsData(request):
 	update_generate_alerts_data()
 	markers = GenerateAlert.objects.all().values()
 	return JsonResponse(list(markers), safe=False)
 
+@login_required()
 @csrf_exempt
 def saveAlert(request):
 	if request.method == 'POST':
@@ -285,15 +294,18 @@ def saveAlert(request):
 
 # Generate Reports Functions
 
+@staff_member_required()
 def generateReportsList(request):
 	generate_reports_list = GenerateReport.objects.all()
 	return render(request, 'lists/generate_reports_list.html', {'generate_reports_list': generate_reports_list})
 
+@login_required()
 def generateReportsData(request):
 	update_generate_reports_data()
 	markers = GenerateReport.objects.all().values()
 	return JsonResponse(list(markers), safe=False)
 
+@login_required()
 def generateReport(request):
 	Lat = float(request.GET.get('Lat', 0))
 	Lng = float(request.GET.get('Lng', 0))
@@ -427,6 +439,7 @@ def get_report_data(Lat, Lng, deviation):
 
 	return traffic_info_data, traffic_light_data, alert_data
 
+@login_required()
 @csrf_exempt
 def saveReport(request):
 	if request.method == 'POST':
@@ -485,6 +498,7 @@ class FeedbackView(AjaxFormMixin, FormView):
 			return JsonResponse(data)
 		return super().form_invalid(form)
 
+@staff_member_required()
 def feedbackList(request):
 	feedback_list = Feedback.objects.all()
 	return render(request, 'lists/feedback_list.html', {'feedback_list': feedback_list})

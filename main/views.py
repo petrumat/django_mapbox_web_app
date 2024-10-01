@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect, reverse
+from django.contrib.auth.decorators import login_required
 from django.conf import settings
 
 from main_app.mixins import Directions
 '''
 Basic view for routing 
 '''
+@login_required()
 def route(request):
 
 	context = {
@@ -17,6 +19,7 @@ def route(request):
 '''
 Basic view for displaying a map 
 '''
+@login_required()
 def map(request):
 
     # lat_a/long_a is the starting point
@@ -72,6 +75,7 @@ def map(request):
 '''
 Traffic info view 
 '''
+@login_required()
 def traffic_info(request):
 
 	context = {
@@ -86,6 +90,7 @@ def traffic_info(request):
 '''
 Generate alerts view 
 '''
+@login_required()
 def generate_alerts(request):
 
 	context = {
@@ -100,6 +105,7 @@ def generate_alerts(request):
 '''
 Traffic lights view 
 '''
+@login_required()
 def traffic_lights(request):
 
 	context = {
@@ -113,6 +119,7 @@ def traffic_lights(request):
 '''
 Generate reports view 
 '''
+@login_required()
 def generate_reports(request):
 
 	context = {
