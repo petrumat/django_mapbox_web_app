@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     # 'allauth.socialaccount.providers.facebook',
+    'whitenoise.runserver_nostatic',
     'storages',
     'main.apps.MainConfig',
     'users.apps.UsersConfig',
@@ -47,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'main_app.urls'

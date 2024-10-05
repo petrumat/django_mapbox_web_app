@@ -5,6 +5,8 @@ db.sqlite3
 accounts*
 example_routes*
 AWS*
+*.pem
+*.ppk
 
 main/__pycache__/
 main/migrations/
