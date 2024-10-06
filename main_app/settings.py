@@ -1,5 +1,5 @@
 from pathlib import Path
-from decouple import AutoConfig, Csv
+from decouple import AutoConfig
 import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -10,7 +10,12 @@ config = AutoConfig()
 
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+
+ENVIRONMENT = config('ENVIRONMENT', default='production')
+if ENVIRONMENT == 'production':
+    ALLOWED_HOSTS = tuple(config('ALLOWED_HOSTS').split(','))
+else:
+    ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -210,5 +215,10 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-SECURE_SSL_REDIRECT = config('SECURE_SSL_REDIRECT')
-SECURE_PROXY_SSL_HEADER = config('SECURE_PROXY_SSL_HEADER', cast=Csv())
+
+if ENVIRONMENT == 'production':
+    SECURE_SSL_REDIRECT = config('SECURE_SSL_REDIRECT')
+    SECURE_PROXY_SSL_HEADER = tuple(config('SECURE_PROXY_SSL_HEADER').split(','))
+else:
+    SECURE_SSL_REDIRECT = False
+    SECURE_PROXY_SSL_HEADER = None
