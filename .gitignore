@@ -7,12 +7,12 @@ example_routes*
 AWS*
 *.pem
 *.ppk
+*.env
 
 main/__pycache__/
 main/migrations/
 main/migrations/__pycache__/
 
-main_app/.env
 main_app/__pycache__/
 
 users/__pycache__/
