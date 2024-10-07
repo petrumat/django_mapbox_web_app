@@ -34,6 +34,8 @@ INSTALLED_APPS = [
     # 'allauth.socialaccount.providers.facebook',
     'whitenoise.runserver_nostatic',
     'storages',
+    'django_otp',
+    'django_otp.plugins.otp_totp',
     'main.apps.MainConfig',
     'users.apps.UsersConfig',
     'testing.apps.AppConfig',
@@ -50,9 +52,10 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
+    'django_otp.middleware.OTPMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
@@ -111,7 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+TIME_ZONE = config('TIME_ZONE')
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
@@ -149,7 +152,7 @@ RECAPTCHA_PRIVATE_KEY = config('RECAPTCHA_PRIVATE_KEY')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-BASE_COUNTRY = "RO"
+BASE_COUNTRY = config('BASE_COUNTRY')
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
