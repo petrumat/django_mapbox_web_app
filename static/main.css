@@ -1,10 +1,13 @@
-* {box-sizing: border-box;}
+* {
+  box-sizing: border-box;
+}
 
 body {
   font-family: 'Courier Prime', monospace;
-  /* display: flex;   DON'T USE display:flex */
   padding: 0;
   margin: 0;
+  color: #2a2a2a;
+  background-color: #fafafa;
 }
 body, html {
   height: 100%;
@@ -20,27 +23,28 @@ body, html {
 h2 {
   text-align: center;
   color: #333;
+  font-size: 2em;
+  margin-bottom: 1em;
 }
 
 .sign_in-container, .sign_up-container, .reset_password-container, .feedback-container {
   justify-content: center;
   align-items: center;
-  max-width: 400px;
-  margin: 100px auto;
-  background-color: #fdfefe;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 450px;
+  margin: 80px auto;
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
 .forgot-password, .signup-link, .signin-link {
   text-align: center;
-  margin-top: 20px;
-  margin-bottom: 10px;
-  color: #000000;
+  margin: 20px 0;
+  color: #333;
 }
 .forgot-password a, .signup-link a, .signin-link a {
-  color: blue;
+  color: #007acc;
   text-decoration: none;
 }
 .forgot-password a:hover, .signup-link a:hover, .signin-link a:hover {
@@ -57,12 +61,12 @@ h2 {
 }
 .social-icons a {
   display: inline-block;
-  margin: 0 5px;
+  margin: 0 8px;
 }
 
-#map { 
+#map {
   width: 100%;
-  height: 80%;
+  height: 90vh;
 }
 .map-container {
   position: fixed;
@@ -70,34 +74,10 @@ h2 {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1; /* Ensure the map stays behind other content */
+  z-index: -1;
 }
 
-#hiddenTrafficInfoGreenIcon {
-  display: None;
-}
-#hiddenTrafficInfoYellowIcon {
-  display: None;
-}
-#hiddenTrafficInfoRedIcon {
-  display: None;
-}
-
-#hiddenGenerateAlertIcon {
-  display: None;
-}
-
-#hiddenTrafficLightIcon {
-  display: None;
-}
-#hiddenTrafficLightGreenIcon {
-  display: None;
-}
-#hiddenTrafficLightRedIcon {
-  display: None;
-}
-
-#hiddenGenerateReportIcon {
+#hiddenTrafficInfoGreenIcon, #hiddenTrafficInfoYellowIcon, #hiddenTrafficInfoRedIcon, #hiddenGenerateAlertIcon, #hiddenTrafficLightIcon, #hiddenTrafficLightGreenIcon, #hiddenTrafficLightRedIcon, #hiddenGenerateReportIcon {
   display: None;
 }
 
@@ -110,32 +90,33 @@ ul.sidenav {
   list-style-type: none;
   margin: 0;
   padding: 0;
-  width: 25%;
-  max-width: 100px;
-  background-color: #f1f1f1;
+  width: 20%;
+  max-width: 200px;
+  background-color: #eaeaea;
   position: fixed;
   height: 100%;
   overflow: auto;
 }
 ul.sidenav li a {
   display: block;
-  color: #000;
-  padding: 8px 16px;
+  color: #2a2a2a;
+  padding: 12px 20px;
   text-decoration: none;
+  font-size: 1.1em;
 }
 ul.sidenav li a.active {
-  background-color: #d7eef2;
-  color: #111111;
+  background-color: #007acc;
+  color: white;
 }
 ul.sidenav li a:hover:not(.active) {
   background-color: #b0dee5;
-  color: black;
+  color: white;
 }
 
 .div-container {
-  margin-left: 100px;
-  padding: 1px 16px;
-  height: 1000px;
+  margin-left: 200px;
+  padding: 15px;
+  height: auto;
 }
 
 @media screen and (max-width: 900px) {
@@ -148,78 +129,83 @@ ul.sidenav li a:hover:not(.active) {
   ul.sidenav li a {
     float: left;
     padding: 15px;
+    text-align: center;
   }
-  
-  .div-container {margin-left: 0;}
-}
 
+  .div-container {
+    margin-left: 0;
+  }
+
+  #map {
+    height: 60vh;
+  }
+}
 @media screen and (max-width: 400px) {
   ul.sidenav li a {
     text-align: center;
     float: none;
   }
+
+  #map {
+    height: 50vh;
+  }
 }
 
 input[type=text], input[type=email], input[type=password], select, textarea {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  margin-top: 6px;
-  margin-bottom: 16px;
+  border-radius: 6px;
+  margin-top: 8px;
+  margin-bottom: 18px;
+  font-size: 1.1em;
   resize: vertical;
 }
 
-
-::-webkit-input-placeholder { /* Edge */
-  color: #2a2a2a;
-  font-family: 'Courier Prime', monospace;
+::-webkit-input-placeholder {
+  color: #555;
 }
-:-ms-input-placeholder { /* Internet Explorer */
-  color: #2a2a2a;
-  font-family: 'Courier Prime', monospace;
+:-ms-input-placeholder {
+  color: #555;
 }
 ::placeholder {
+  color: #555;
+}
+
+select.selection option {
+  color: #2a2a2a;
+}
+
+input, select {
   color: #2a2a2a;
   font-family: 'Courier Prime', monospace;
 }
 
-select.selection option{
-  color: #2a2a2a;
-  font-family: 'Courier Prime', monospace;
+button[type=submit] {
+  background-color: #007acc;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.1em;
 }
-
-input, select{
-  color: #2a2a2a;
-  font-family: 'Courier Prime', monospace;
-
+button[type=submit]:hover {
+  background-color: #005fa3;
 }
 
 .check-container {
   display: block;
   position: relative;
   padding-left: 35px;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-.check-container input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
 }
 .checkmark {
-  position: absolute;
   top: 0;
   left: 0;
-  height: 15px;
-  width: 15px;
+  height: 20px;
+  width: 20px;
   background-color: #d3d0d0;
 }
 .check-container:hover input ~ .checkmark {
@@ -228,31 +214,18 @@ input, select{
 .check-container input:checked ~ .checkmark {
   background-color: orangered;
 }
-.check-container:after {
-  content: "";
-  position: absolute;
+.checkmark:after {
   display: none;
 }
-.check-container input:checked ~ .checkmark:after {
+input:checked ~ .checkmark:after {
   display: block;
-}
-.check-container .checkmark:after {
-  left: 9px;
-  top: 5px;
-  width: 5px;
-  height: 10px;
-  border: solid white;
-  border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
 }
 
 .switch {
   position: relative;
   display: inline-block;
-  width: 60px;
-  height: 34px;
+  width: 65px;
+  height: 36px;
 }
 .switch input {
   opacity: 0;
@@ -270,8 +243,10 @@ input, select{
   background-color: #ccc;
   -webkit-transition: .4s;
   transition: .4s;
+  border-radius: 34px;
 }
 .slider:before {
+  border-radius: 50%;
   position: absolute;
   content: "";
   height: 26px;
@@ -299,19 +274,6 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
-
-button[type=submit] {
-  background-color: #d7eef2;
-  color: black;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-button[type=submit]:hover {
-  background-color: #b0dee5;
-}
-
 .container {
   border-radius: 5px;
   background-color: #f2f2f2;
@@ -319,13 +281,14 @@ button[type=submit]:hover {
 }
 
 table {
+  width: 100%;
   font-family: 'Courier Prime', monospace;
   border-collapse: collapse;
   width: 100%;
 }
 table td, table th {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 10px;
 }
 table tr:hover {
   background-color: #ddd;
@@ -334,16 +297,15 @@ table th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #d7eef2;
-  color: black;
+  background-color: #007acc;
+  color: white;
 }
 
 .selected {
-  background-color: #b0dee5;
-  color: #FFF;
+  background-color: #005fa3;
 }
 
-#payment-form {
+/* #payment-form {
   width: 100%;
 }
 
@@ -357,8 +319,8 @@ input, select, .btn {
   display: inline-block;
   font-size: 17px;
   line-height: 20px;
-  text-decoration: none; /* remove underline from anchors */
-}
+  text-decoration: none; /* remove underline from anchors
+} */
 input:hover, .btn:hover {
   opacity: 1;
 }
@@ -366,22 +328,22 @@ input:hover, .btn:hover {
 .map-button {
   background-color: white;
   border: 2px solid #fff;
-  border-radius: 3px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
-  color: rgb(25, 25, 25);
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  color: #191919;
   cursor: pointer;
   font-family: Roboto, Arial, sans-serif;
-  font-size: 16px;
+  font-size: 1em;
   line-height: 38px;
   margin: 10px 10px 0px 0px;  /* top, right, bottom, left */
-  padding: 0 5px;
+  padding: 0px 0px;
   text-align: center;
   z-index: 9999;
   pointer-events: auto;
 }
 .night-mode .map-button {
-  background-color: black;
-  color: rgb(150, 150, 150);
+  background-color: #000;
+  color: #969696;
   border: 2px solid #444;
   box-shadow: 0 2px 6px rgba(255, 255, 255, 0.1);
 }
@@ -389,7 +351,8 @@ input:hover, .btn:hover {
 .map-label {
   background-color: white;
   border: 2px solid white;
-  border-radius: 3px;
+  border-radius: 4px;
+  font-size: 1.2em;
   box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
   color: rgb(25, 25, 25);
   cursor: default;
@@ -399,12 +362,12 @@ input:hover, .btn:hover {
   font-style: italic;
   line-height: 38px;
   margin: 10px 10px 10px 10px;  /* top, right, bottom, left */
-  padding: 0 0px;
+  padding: 5px;
   text-align: center;
 }
 .night-mode .map-label {
   background-color: black;
-  color: rgb(150, 150, 150);
+  color: #969696;
   border: 2px solid #444;
   box-shadow: 0 2px 6px rgba(255, 255, 255, 0.1);
 }
@@ -472,7 +435,6 @@ input:hover, .btn:hover {
   background-color: black;
 }
 
-/* Hide label, search when screen width is less than 900px */
 @media screen and (max-width: 900px) {
   .map-label {
     display: none;
