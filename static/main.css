@@ -186,7 +186,7 @@ ul.sidenav li a:hover:not(.active) {
   }
 
   #map {
-    height: 60vh;
+    height: 75vh;
   }
 
   .map-label {
@@ -204,7 +204,7 @@ ul.sidenav li a:hover:not(.active) {
   }
 
   #map {
-    height: 50vh;
+    height: 70vh;
   }
 }
 
