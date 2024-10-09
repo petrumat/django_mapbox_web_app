@@ -1,3 +1,41 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const sidenav = document.querySelector('.sidenav');
+    const navbarButton = document.querySelector('.navbar-button');
+  
+    function adjustNavbarButton() {
+      const isSidenavOpen = sidenav.classList.contains('open');
+      const windowWidth = window.innerWidth;
+  
+      if (isSidenavOpen) {
+        if (windowWidth < 900) {
+          // For screens under 900px, move the button below the sidenav
+          const sidenavHeight = sidenav.offsetHeight;
+          navbarButton.style.top = `${sidenavHeight + 10}px`;
+          navbarButton.style.left = '10px';
+        } else {
+          // Else, move the button to the right of the sidenav
+          const sidenavWidth = sidenav.offsetWidth;
+          navbarButton.style.left = `${sidenavWidth + 10}px`;
+          navbarButton.style.top = '10px';
+        }
+      } else {
+        // When sidenav is closed, reset button to its original position
+        navbarButton.style.left = '10px';
+        navbarButton.style.top = '10px';
+      }
+    }
+  
+    // Event listener for navbar button to toggle sidenav
+    navbarButton.addEventListener('click', function() {
+      sidenav.classList.toggle('open');
+      adjustNavbarButton();
+    });
+  
+    // Adjust button position on window resize
+    window.addEventListener('resize', adjustNavbarButton);
+  });
+
+
 function DirectionsToggle(){
   var el = $('#dir-toggle');
   var dir_table = $('#dir-table')

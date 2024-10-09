@@ -23,7 +23,14 @@ body, html {
 h2 {
   text-align: center;
   color: #333;
-  font-size: 2em;
+  font-size: 1.2em;
+  margin-bottom: 1em;
+}
+
+h3 {
+  text-align: center;
+  color: #333;
+  font-size: 1.2em;
   margin-bottom: 1em;
 }
 
@@ -66,7 +73,7 @@ h2 {
 
 #map {
   width: 100%;
-  height: 90vh;
+  height: 85vh;
 }
 .map-container {
   position: fixed;
@@ -84,6 +91,52 @@ h2 {
 .logo {
   width: 150px;
   padding: 8px;
+}
+
+.navbar-button {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  z-index: 1500;
+  transition: 0.3s;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  margin: 10px;
+}
+
+.sidenav {
+  display: none;
+  position: fixed;
+  left: 0px;
+  top: 0;
+  height: 100%;
+  width: 250px;
+  background-color: #f1f1f1;
+  z-index: 1000;
+  overflow-x: hidden;
+  transition: 0.3s;
+}
+.sidenav.open {
+  display: block;
+}
+.sidenav li a {
+  display: block;
+  padding: 15px 20px;
+  color: #333;
+  text-decoration: none;
+  font-family: 'Courier Prime', monospace;
+}
+.sidenav li a:hover {
+  background-color: #b0dee5;
+  color: black;
+}
+.sidenav li a.active {
+  background-color: #d7eef2;
+  color: #111111;
 }
 
 ul.sidenav {
@@ -114,7 +167,7 @@ ul.sidenav li a:hover:not(.active) {
 }
 
 .div-container {
-  margin-left: 200px;
+  margin-left: 0px;
   padding: 15px;
   height: auto;
 }
@@ -132,12 +185,16 @@ ul.sidenav li a:hover:not(.active) {
     text-align: center;
   }
 
-  .div-container {
-    margin-left: 0;
-  }
-
   #map {
     height: 60vh;
+  }
+
+  .map-label {
+    display: none;
+  }
+
+  .mapboxgl-ctrl-top-left .mapboxgl-ctrl-geocoder {
+    display: none;
   }
 }
 @media screen and (max-width: 400px) {
@@ -433,14 +490,4 @@ input:hover, .btn:hover {
 }
 .night-mode .mapboxgl-ctrl-geocoder .mapboxgl-ctrl-geocoder--suggestion.active {
   background-color: black;
-}
-
-@media screen and (max-width: 900px) {
-  .map-label {
-    display: none;
-  }
-
-  .mapboxgl-ctrl-top-left .mapboxgl-ctrl-geocoder {
-    display: none;
-  }
 }
