@@ -97,15 +97,20 @@ h3 {
   position: fixed;
   top: 10px;
   left: 10px;
-  background-color: #333;
+  background-color: #007acc;
   color: #fff;
   border: none;
+  border-radius: 4px;
   padding: 10px 15px;
   cursor: pointer;
   z-index: 1500;
   transition: 0.3s;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   margin: 10px;
+}
+
+.navbar-button:hover {
+  background-color: #005fa3;
 }
 
 .sidenav {
@@ -192,19 +197,11 @@ ul.sidenav li a:hover:not(.active) {
   .map-label {
     display: none;
   }
-
-  .mapboxgl-ctrl-top-left .mapboxgl-ctrl-geocoder {
-    display: none;
-  }
 }
 @media screen and (max-width: 400px) {
   ul.sidenav li a {
     text-align: center;
     float: none;
-  }
-
-  #map {
-    height: 70vh;
   }
 }
 
@@ -384,7 +381,7 @@ input:hover, .btn:hover {
 
 .map-button {
   background-color: white;
-  border: 2px solid #fff;
+  border: 0px solid #fff;
   border-radius: 4px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   color: #191919;
@@ -393,7 +390,7 @@ input:hover, .btn:hover {
   font-size: 1em;
   line-height: 38px;
   margin: 10px 10px 0px 0px;  /* top, right, bottom, left */
-  padding: 0px 0px;
+  padding: 0px 5px;
   text-align: center;
   z-index: 9999;
   pointer-events: auto;
@@ -429,8 +426,8 @@ input:hover, .btn:hover {
   box-shadow: 0 2px 6px rgba(255, 255, 255, 0.1);
 }
 
-.mapboxgl-ctrl-top-left .mapboxgl-ctrl-geocoder {
-  margin-top: 15px;
+.mapboxgl-ctrl-bottom-left .mapboxgl-ctrl-geocoder {
+  margin-bottom: 15px;
 }
 .mapboxgl-ctrl-geocoder {
   background-color: transparent !important;

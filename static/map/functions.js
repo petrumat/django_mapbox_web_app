@@ -35,7 +35,7 @@ function createSearchBox(map, mapboxgl, base_country) {
         placeholder: 'Search for places',
     });
   
-    map.addControl(geocoder, 'top-left');
+    map.addControl(geocoder, 'bottom-left');
   
     geocoder.on('result', (event) => {
         const [lng, lat] = event.result.geometry.coordinates;
