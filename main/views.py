@@ -3,6 +3,16 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 
 from main_app.mixins import Directions
+
+'''
+Basic views for 404 and 500 pages
+'''
+def handling_404(request, exceptions):
+	return render(request, '404.html', {})
+def handling_500(request, exceptions):
+	return render(request, '500.html', {})
+
+
 '''
 Basic view for routing 
 '''
