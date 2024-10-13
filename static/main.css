@@ -34,7 +34,7 @@ h3 {
   margin-bottom: 1em;
 }
 
-.sign_in-container, .sign_up-container, .reset_password-container, .feedback-container {
+.sign_in-container, .sign_up-container, .help-container, .reset_password-container, .feedback-container {
   justify-content: center;
   align-items: center;
   max-width: 450px;

@@ -57,6 +57,12 @@
     <li><a href="{% url 'users:feedback' %}">Feedback</a></li>
   {% endif %}
 
+  {% if "help" in request.path %}
+    <li><a class="active" href="{% url 'users:help' %}">Help</a></li>
+  {% else %}
+    <li><a href="{% url 'users:help' %}">Help</a></li>
+  {% endif %}
+
   {% if "sign-out" in request.path %}
     <li><a class="active" href="{% url 'users:sign-out' %}">Sign Out</a></li>
   {% else %}

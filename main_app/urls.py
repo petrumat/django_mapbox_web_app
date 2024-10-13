@@ -13,7 +13,7 @@ from django_otp.plugins.otp_totp.models import TOTPDevice
 from django_otp.plugins.otp_totp.admin import TOTPDeviceAdmin
 from allauth.account.models import EmailAddress
 from allauth.socialaccount.models import SocialAccount, SocialApp, SocialToken
-from users.models import TrafficInfo, TrafficLight, GenerateAlert, GenerateReport, Feedback
+from users.models import UserProfile, TrafficInfo, TrafficLight, GenerateAlert, GenerateReport, Feedback
 
 class OTPAdmin(OTPAdminSite):
     pass
@@ -33,6 +33,7 @@ secure_admin.register(SocialApp)
 secure_admin.register(SocialToken)
 
 # Register custom models
+secure_admin.register(UserProfile)
 secure_admin.register(TrafficInfo)
 secure_admin.register(TrafficLight)
 secure_admin.register(GenerateAlert)

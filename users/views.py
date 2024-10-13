@@ -21,8 +21,7 @@ from reportlab.lib.pagesizes import landscape, A4
 from reportlab.lib.units import inch, cm
 from reportlab.platypus import Table, TableStyle
 from reportlab.lib import colors
-import json
-import io
+import json, io
 from django.db.models import Q
 
 from main_app.mixins import	AjaxFormMixin, reCAPTCHAValidation, FormErrors,	is_ajax
@@ -221,6 +220,13 @@ def sign_out(request):
 	'''
 	logout(request)
 	return redirect(reverse('users:sign-in'))
+
+
+
+# Help Functions
+@login_required()
+def help(request):
+	return render(request, 'partials/help.html')
 
 
 
