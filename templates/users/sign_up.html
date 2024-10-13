@@ -17,14 +17,8 @@
     <form id="signupform" method="POST" action="/sign-up">
       {% csrf_token %}
 
-      <label for="first_name">First Name</label>
-      {{form.first_name}}
-
-      <label for="last_name">Last Name</label>
-      {{form.last_name}}
-
-      <label for="username">Username</label>
-      {{form.username}}
+      <label for="email">Email</label>
+      {{form.email}}
 
       <label for="password1">Password</label>
       {{form.password1}}
@@ -38,6 +32,17 @@
       <input type="checkbox" onclick="showPword()">
       <span class="checkmark"></span>
       </label>
+
+      <div>
+        <div>
+          <label for="enable_mfa"><strong>Enable MFA (recommended)</strong></label>
+            {{ form.enable_mfa }}
+        </div>
+
+        <div class="mfa-info" id="mfa-info" style="display: none;">
+          <h4>You will be redirected to setup MFA for this account.</h4>
+        </div>
+      </div>
 
       <button type="submit">Sign up</button>
 
@@ -55,5 +60,20 @@
   <script type="text/javascript">
     // Create a variable that can be used in main.js
     var recaptcha_site_key = '{{recaptcha_site_key|safe}}'
+  </script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var mfaCheckbox = document.getElementById("id_enable_mfa");
+      var mfaInfo = document.getElementById("mfa-info");
+
+      mfaCheckbox.addEventListener("change", function() {
+        if (mfaCheckbox.checked) {
+          mfaInfo.style.display = "block";
+        } else {
+          mfaInfo.style.display = "none";
+        }
+      });
+    });
   </script>
 {% endblock %}

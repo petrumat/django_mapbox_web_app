@@ -4,7 +4,21 @@ from django.core.validators import MinValueValidator
 
 class UserProfile(models.Model):
 	'''
-	Our UserProfile model extends the built-in Django User Model
+	UserProfile model extends the built-in django User model.
+	
+	default django User fields:
+		username
+		first_name
+		last_name
+		email
+		password
+		groups
+		user_permissions
+		is_staff
+		is_active
+		is_superuser
+		last_login
+		date_joined
 	'''
 	timestamp = models.DateTimeField(auto_now_add=True)
 	updated = models.DateTimeField(auto_now=True)
@@ -21,7 +35,7 @@ class UserProfile(models.Model):
 	captcha_score = models.FloatField(default=0.0)
 	has_profile = models.BooleanField(default=False)
 
-	is_active = models.BooleanField(default=True)
+	mfa_enabled = models.BooleanField(default=False)
 
 	def __str__(self):
 		return f'{self.user}'

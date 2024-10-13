@@ -85,7 +85,7 @@ class SignUpView(AjaxFormMixin, FormView):
 
 	template_name = "users/sign_up.html"
 	form_class = UserForm
-	success_url = "/"
+	success_url = "/help"
 
 	#reCAPTURE key required in context
 	def get_context_data(self, **kwargs):
@@ -105,24 +105,43 @@ class SignUpView(AjaxFormMixin, FormView):
 			message = "Invalid reCAPTCHA. Please try again."
 
 			if captcha["success"]:
-				obj = form.save()
-				obj.email = obj.username
-				obj.save()
-				up = obj.userprofile
-				up.captcha_score = float(captcha["score"])
-				up.save()
-				
-				login(self.request, obj, backend='django.contrib.auth.backends.ModelBackend')
+				email = form.cleaned_data.get('email')
+				User = get_user_model()
+				if User.objects.filter(email=email).exists() or User.objects.filter(username=email).exists():
+					data = {'result': "Error", 'message': "Email already in use. Sign in?"}
+					return JsonResponse(data)
 
-				#change result & message on success
+				user = form.save(commit=False)
+				user.username = email
+				user.email = email
+				user.set_password(form.cleaned_data.get('password1'))
+				user.save()
+
+				user_profile = user.userprofile
+				user_profile.captcha_score = float(captcha["score"])
+				user_profile.mfa_enabled = form.cleaned_data.get('enable_mfa')
+				user_profile.save()
+				
+				login(self.request, user, backend='django.contrib.auth.backends.ModelBackend')
+
 				result = "Success"
 				message = "Thank you for signing up"
+
+				if user_profile.mfa_enabled:
+					redirect = "/help"	# "/mfa"
+				else:
+					redirect = "/help"
+
+				data = {'result': result, 'message': message, 'redirect': redirect}
+				return JsonResponse(data)
 
 			
 			data = {'result': result, 'message': message}
 			return JsonResponse(data)
 
 		return response
+
+
 
 class SignInView(AjaxFormMixin, FormView):
 	'''

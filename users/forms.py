@@ -1,7 +1,7 @@
-from django.forms import ModelForm
+from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from django import forms
+from django.core.exceptions import ValidationError
 from .models import UserProfile, Feedback
 
 
@@ -9,16 +9,17 @@ class UserForm(UserCreationForm):
 	'''
 	Form that uses built-in UserCreationForm to handel user creation
 	'''
-	first_name = forms.CharField(max_length=30, required=True,
-		widget=forms.TextInput(attrs={'placeholder': '*Your first name..'}))
-	last_name = forms.CharField(max_length=30, required=True,
-		widget=forms.TextInput(attrs={'placeholder': '*Your last name..'}))
-	username = forms.EmailField(max_length=254, required=True,
-		widget=forms.TextInput(attrs={'placeholder': '*Email..'}))
+	# first_name = forms.CharField(max_length=30, required=True,
+	# 	widget=forms.TextInput(attrs={'placeholder': '*First name...'}))
+	# last_name = forms.CharField(max_length=30, required=True,
+	# 	widget=forms.TextInput(attrs={'placeholder': '*Last name...'}))
+	email = forms.EmailField(max_length=254, required=True,
+		widget=forms.TextInput(attrs={'placeholder': '*Email...'}))
 	password1 = forms.CharField(
-		widget=forms.PasswordInput(attrs={'placeholder': '*Password..','class':'password'}))
+		widget=forms.PasswordInput(attrs={'placeholder': '*Password...','class':'password'}))
 	password2 = forms.CharField(
-		widget=forms.PasswordInput(attrs={'placeholder': '*Confirm Password..','class':'password'}))
+		widget=forms.PasswordInput(attrs={'placeholder': '*Confirm password...','class':'password'}))
+	enable_mfa = forms.BooleanField(required=False, label="Enable MFA")
 
 	#reCAPTCHA token
 	token = forms.CharField(
@@ -26,7 +27,17 @@ class UserForm(UserCreationForm):
 
 	class Meta:
 		model = User
-		fields = ('username', 'first_name', 'last_name', 'password1', 'password2', )
+		# fields = ('email', 'first_name', 'last_name', 'password1', 'password2', )
+		fields = ('email', 'password1', 'password2', 'enable_mfa')
+
+	def clean_email(self):
+		"""
+		Validate that the email is unique in the system.
+		"""
+		email = self.cleaned_data.get('email')
+		if User.objects.filter(email=email).exists():
+			raise ValidationError("Email already in use. Sign in?")
+		return email
 
 
 
